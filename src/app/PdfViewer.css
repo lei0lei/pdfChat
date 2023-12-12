@@ -1,0 +1,17 @@
+#element1 {display:inline-block;margin-right:1%;min-height: 100vh; width:47%; background-color:rgb(57, 57, 66);vertical-align: middle;min-height: 100vh;} 
+#element2 {display:inline-block; width:47%;min-height: 100vh; background-color:rgb(66, 57, 57);vertical-align: middle;}
+.parent {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 0rem 0rem;
+  text-align: center;
+  min-height: 100vh;
+}
+.rpv-core__viewer {
+  width: 100%;
+  min-height: 100vh;
+}
+.rpv-core__inner-page{
+  width: 100%;
+  min-height: 100vh;
+}

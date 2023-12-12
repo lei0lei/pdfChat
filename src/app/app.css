@@ -1,0 +1,10 @@
+#element1 {display:inline-block;margin-right:1%; width:47%; background-color:rgb(66, 57, 57);vertical-align: middle;min-height: 100vh;} 
+#element2 {display:inline-block; width:47%; background-color:rgb(66, 57, 57);vertical-align: middle;min-height: 100vh;}
+.parent {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+  height: 100%;
+  min-height: 100vh;
+}
