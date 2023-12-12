@@ -5,7 +5,7 @@ import 'react-chatbot-kit/build/main.css'
 
 // import { Navigation } from './Navigation.js'
 import React from 'react';
-import '@/app/App.css'
+import '@/app/app.css'
 import { PdfProvider } from './provider.js';
 // import PdfViewer from './PdfViewerx.js'
 import dynamic from 'next/dynamic';
