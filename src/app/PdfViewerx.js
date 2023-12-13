@@ -17,13 +17,13 @@ import  { useContext } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import { useEffect } from 'react';
 
-import {  type PutBlobResult } from '@vercel/blob';
+// import {  type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useRef } from 'react';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
-    const [blob, setBlob] = useState<PutBlobResult | null>(null);
+    const [blob, setBlob] = useState(null);
     const { currentShowFile,
             currentShowFileObj,
             updateFileList,
@@ -79,7 +79,7 @@ const PdfViewer = () => {
                         reader.onloadend=async (e)=>{
                             
                             files.push({_file:e.target.result,_fileName:selectedFile.name})
-                            const res = await fetch(e.target.result as string);
+                            const res = await fetch(e.target.result);
                             const buffer = await res.arrayBuffer();
                             
                             // 加载PDF文档
