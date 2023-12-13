@@ -8,7 +8,7 @@
 
 # testing
 /coverage
-tsconfig.json
+./tsconfig.json
 # next.js
 /.next/
 /out/

@@ -57,7 +57,6 @@ const PdfViewer = () => {
 
         // 获取token 传到后台，调用upload file api,后台创建vectordb
         setBlob(newBlob);
-        
         console.log(blob)
         //更新文件名和文件列表
         let filesName = []
@@ -115,7 +114,6 @@ const PdfViewer = () => {
         //设置当前文件名
         updateDocs(finalText)
         updateVectorDatabase(finalText)
-        
         updateFileList(filesName);
         updateFileObjs(files);
         
