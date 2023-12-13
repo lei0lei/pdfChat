@@ -58,6 +58,7 @@ export class PdfProvider extends React.Component {
         // const splitDocs =   await textSplitter.splitDocuments(texts);
         let embeddings=null;
         try{
+          
           // embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
           
           embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
