@@ -17,10 +17,13 @@ import  { useContext } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import { useEffect } from 'react';
 
-
+import {  type PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
+import { useRef } from 'react';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
+    const [blob, setBlob] = useState<PutBlobResult | null>(null);
     const { currentShowFile,
             currentShowFileObj,
             updateFileList,
@@ -45,6 +48,17 @@ const PdfViewer = () => {
     // handle file onChange event
     const allowedFiles = ['application/pdf'];
     const handleFile = async (e) =>{
+        // 后端创建session
+        // 上传文件到blob
+        const newBlob = await upload(e.target.files[0].name, e.target.files[0], {
+            access: 'public',
+            handleUploadUrl: '/api/pdf/upload2blob',
+          });
+
+        // 获取token 传到后台，调用upload file api,后台创建vectordb
+        setBlob(newBlob);
+        
+        console.log(blob)
         //更新文件名和文件列表
         let filesName = []
         let files = []

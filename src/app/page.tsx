@@ -10,6 +10,9 @@ import { PdfProvider } from './provider.js';
 // import PdfViewer from './PdfViewerx.js'
 import dynamic from 'next/dynamic';
 
+
+
+
 const _PdfProvider = dynamic(() => import('./provider'), {
   ssr: false // This line will disable server-side render
 });

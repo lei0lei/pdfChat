@@ -70,12 +70,6 @@ export class PdfProvider extends React.Component {
         }
         const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
         this.setState({ vectordb: vectorStore });
-        // const relevantDocs =  await vectorStore.similaritySearch(
-        //   "what's the title"
-        // );
-        
-        // console.log(relevantDocs); // "Hello!"
-      
     }
     
     render() {
