@@ -79,7 +79,7 @@ const PdfViewer = () => {
                         reader.onloadend=async (e)=>{
                             
                             files.push({_file:e.target.result,_fileName:selectedFile.name})
-                            const res = await fetch(e.target.result);
+                            const res = await fetch(e.target.result as string);
                             const buffer = await res.arrayBuffer();
                             
                             // 加载PDF文档
