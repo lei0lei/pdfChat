@@ -18,7 +18,8 @@ try{
   
 } catch(err) {
 //   alert('Api key not available');
-  model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,openAIApiKey:'none'});
+  let openAIApiKey = prompt('No api key found, insert here')
+  model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,openAIApiKey:openAIApiKey});
 }
 // const model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,openAIApiKey:process.env.REACT_APP_openAIApiKey});
 const memory = new BufferMemory({
