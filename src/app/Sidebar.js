@@ -7,6 +7,22 @@ import { BiHomeSmile, BiUser } from 'react-icons/bi'
 import { HiOutlineChatBubbleBottomCenterText } from 'react-icons/hi2'
 import { FiSettings } from 'react-icons/fi'
 import { PdfContext } from './context.js';
+
+let url = 'https://pdf-chat-server.vercel.app/'
+fetch(url).then((response) => {
+  if (response.ok) {
+    alert('backend connected');
+  }
+  throw new Error('Something went wrong');
+})
+.then((responseJson) => {
+  // Do something with the response
+})
+.catch((error) => {
+  console.log(error)
+});
+
+
 export  const Sidebar = () => {
   const { currentShowFile,
     updateCurrentShowFile,

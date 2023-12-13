@@ -43,33 +43,34 @@ export class PdfProvider extends React.Component {
     updateCurrentShowFileObj(file){this.setState({currentShowFileObj:file})}
 
     updateDocs(newString) {
-        this.setState({ myString: newString });
+        this.setState({ docs: newString });
     }
 
     async updateVectorDatabase(newString) {
+      // do nothing ,move to server
         // console.log(newString)
-        const textSplitter = new RecursiveCharacterTextSplitter({
-          chunkSize: 1500,
-          chunkOverlap: 200,
-        });
-        const splitDocs = await textSplitter.splitDocuments([
-          new Document({ pageContent: newString }),
-        ])
-        // const splitDocs =   await textSplitter.splitDocuments(texts);
-        let embeddings=null;
-        try{
+        // const textSplitter = new RecursiveCharacterTextSplitter({
+        //   chunkSize: 1500,
+        //   chunkOverlap: 200,
+        // });
+        // const splitDocs = await textSplitter.splitDocuments([
+        //   new Document({ pageContent: newString }),
+        // ])
+        // // const splitDocs =   await textSplitter.splitDocuments(texts);
+        // let embeddings=null;
+        // try{
 
-          // embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
+        //   // embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
           
-          embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
-          // console.log(process.env.REACT_APP_openAIApiKey)
-        } catch(err) {
-          let openAIApiKey = prompt('No api key found, insert here')
-          embeddings = new OpenAIEmbeddings({openAIApiKey:openAIApiKey});
+        //   embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
+        //   // console.log(process.env.REACT_APP_openAIApiKey)
+        // } catch(err) {
+        //   let openAIApiKey = prompt('No api key found, insert here')
+        //   embeddings = new OpenAIEmbeddings({openAIApiKey:openAIApiKey});
 
-        }
-        const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
-        this.setState({ vectordb: vectorStore });
+        // }
+        // const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
+        // this.setState({ vectordb: vectorStore });
     }
     
     render() {

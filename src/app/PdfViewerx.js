@@ -64,7 +64,7 @@ const PdfViewer = () => {
 
         let finalText = "";
         let promises = [];
-        // let selectedFile = e.target.files[0];
+
         for (let selectedFile of e.target.files){
             filesName.push(selectedFile.name)
             
