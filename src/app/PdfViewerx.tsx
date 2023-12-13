@@ -115,6 +115,7 @@ const PdfViewer = () => {
         //设置当前文件名
         updateDocs(finalText)
         updateVectorDatabase(finalText)
+        
         updateFileList(filesName);
         updateFileObjs(files);
         
