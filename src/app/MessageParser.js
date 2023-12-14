@@ -57,7 +57,7 @@ const MessageParser = ({ children, actions }) => {
     //   question: message,
     // });
     // console.log({ streamedResponse });
-    actions.handleResponse(result.text);
+    actions.handleResponse(result.message.text);
     
   };
 
