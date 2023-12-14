@@ -21,14 +21,16 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/PdfViewerx.js"  ],
+    "**/*.tsx",
+    "src/app/PdfViewerx.js"
+  ],
   "exclude": [
     "node_modules"
   ]

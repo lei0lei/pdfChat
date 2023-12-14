@@ -32,19 +32,17 @@ const MessageParser = ({ children, actions }) => {
   const context = useContext(PdfContext);
   
   const parse = async (message) => {
-
-    const rawResponse = await fetch('https://pdf-chat-server.vercel.app/messageExchange/textMessageUpload', {
+    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
+    const rawResponse = await fetch(`${apiUrl}/messageExchange/textMessageUpload`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'mode': 'cors',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({docs: context.docs, quiz: message})
     });
     console.log({docs: context.docs, quiz: message})
     const content = await rawResponse.json();
-    console.log(content)
+    console.log(content.message)
     //move to server
     // const chain = ConversationalRetrievalQAChain.fromLLM(
     //   model,
@@ -57,7 +55,7 @@ const MessageParser = ({ children, actions }) => {
     //   question: message,
     // });
     // console.log({ streamedResponse });
-    actions.handleResponse(result.message.text);
+    actions.handleResponse(content.message.text);
     
   };
 

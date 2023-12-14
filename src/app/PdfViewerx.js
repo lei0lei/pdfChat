@@ -23,6 +23,7 @@ import { useRef } from 'react';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
+    
     const [blob, setBlob] = useState(null);
     const { currentShowFile,
             currentShowFileObj,
@@ -50,14 +51,24 @@ const PdfViewer = () => {
     const handleFile = async (e) =>{
         // 后端创建session
         // 上传文件到blob
-        const newBlob = await upload(e.target.files[0].name, e.target.files[0], {
-            access: 'public',
-            handleUploadUrl: '/api/pdf/upload2blob',
-          });
-
+        for (let selectedFile of e.target.files){
+            const newBlob = await upload(selectedFile.name, selectedFile, {
+                access: 'public',
+                handleUploadUrl: '/api/pdf/upload2blob',
+            });
+        }
+        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
+        // const res = await fetch(`${apiUrl}/test_backend`, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ key: 'value' })
+        //   });
+        // console.log(res)
         // 获取token 传到后台，调用upload file api,后台创建vectordb
-        setBlob(newBlob);
-        console.log(blob)
+        // setBlob(newBlob);
+        // console.log(blob)
         //更新文件名和文件列表
         let filesName = []
         let files = []
