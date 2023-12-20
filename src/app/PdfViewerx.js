@@ -1,29 +1,23 @@
 import {useState} from 'react'
 import './PdfViewer.css'
-// Import Worker
 import { Worker } from '@react-pdf-viewer/core';
-// Import the main Viewer component
 import { Viewer } from '@react-pdf-viewer/core';
-// Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
-// default layout plugin
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-// Import styles of default layout plugin
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import {MyChatbot} from './Chatbot.js'
-
 import { PdfContext } from './context.js'; 
-import  { useContext } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { useEffect } from 'react';
-
 // import {  type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
-import { useRef } from 'react';
+import io from 'socket.io-client'
+import React, { useContext, useEffect } from 'react';
+// import SocketContext from './SocketContext';
+import { createHash } from 'crypto';
+import { BlobServiceClient } from '@azure/storage-blob';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
-    
     const [blob, setBlob] = useState(null);
     const { currentShowFile,
             currentShowFileObj,
@@ -32,7 +26,12 @@ const PdfViewer = () => {
             updateDocs,
             updateCurrentShowFile,
             updateCurrentShowFileObj,
-            updateVectorDatabase } = useContext(PdfContext);
+            updateVectorDatabase,
+            updateSeq_id,
+            updateConversationID,
+            updateSessionID,
+            socket,
+            setSocket } = useContext(PdfContext);
     useEffect(() => {
         console.log(currentShowFile)
                 // 放置组件需要做的操作，例如 fetch 数据，或者更新状态
@@ -48,47 +47,97 @@ const PdfViewer = () => {
 
     // handle file onChange event
     const allowedFiles = ['application/pdf'];
+    let _sessionID,_conversationID,_seqID;
     const handleFile = async (e) =>{
-        // 后端创建session
-        // 上传文件到blob
+        // 重新建立socket连接，每次点击上传都会重新建立socket连接关闭旧的。
+        if (socket) {
+            socket.disconnect();
+            updateSeq_id(0);
+          }
+        
+        //创建socket连接
+        const io = require('socket.io-client');
+        // const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws');
+        const newSocket = io('ws://localhost:8080/ws');
+        newSocket.on('connect', () => {
+            setSocket(newSocket);
+            console.log('WebSocket连接已打开!');
+            
+            newSocket.on('error', (error) => {
+                console.log('Socket.io 错误: ', error);
+            });
+        
+            newSocket.on('disconnect', () => {
+                console.log('Socket.io 连接已关闭');})
+
+            if (newSocket.connected){console.log('socket state ok');newSocket.emit('getSession',null)};
+        });
+        
+        newSocket.on('IDs', (data) => {
+            _sessionID = data.sessionID
+            _conversationID = data.conversationID
+            _seqID = data.seqenceID
+            console.log('You have got session id from server:')
+            console.log(_sessionID);
+            console.log(_conversationID);
+            updateSessionID(_sessionID)
+            updateConversationID(_conversationID)
+            updateSeq_id(_seqID)
+        });
+
+        // 多文件上传
+        // 文件上传后后台服务器会进行如下一系列操作
+        // 将文件存放到后端blobs
+        // 提取文件的文本-附带文件链接及sha256传送给后端-构建vectordb-存放到后端数据库中
+        
+        
+        
+        //更新文件名和文件列表
+        function FileContent(fileName, fileUrl, fileText, fileSha256, fileType) {
+            this.fileName = fileName;
+            this.fileUrl = fileUrl;
+            this.fileText = fileText;
+            this.fileSha256 = fileSha256;
+            this.fileType = fileType;
+        }
+
+        let filesName = []
+        let files = []
+
+        
+        let promises = [];
+        let files_url = []
+        let files_contents = [];
+        let files_sha256 = [];
+        let fileContents = [];
         for (let selectedFile of e.target.files){
+            let finalText = "";
+            filesName.push(selectedFile.name)
+            finalText += 'FILENAME:'+ selectedFile.name+'[*]';
+            //上传文件到vercel
             const newBlob = await upload(selectedFile.name, selectedFile, {
                 access: 'public',
                 handleUploadUrl: '/api/pdf/upload2blob',
             });
-        }
-        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
-        // const res = await fetch(`${apiUrl}/test_backend`, {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ key: 'value' })
-        //   });
-        // console.log(res)
-        // 获取token 传到后台，调用upload file api,后台创建vectordb
-        // setBlob(newBlob);
-        // console.log(blob)
-        //更新文件名和文件列表
-        let filesName = []
-        let files = []
-
-        let finalText = "";
-        let promises = [];
-
-        for (let selectedFile of e.target.files){
-            filesName.push(selectedFile.name)
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
             
+
             if(selectedFile){
                 if(selectedFile&&allowedFiles.includes(selectedFile.type)){
                     
                     let reader = new FileReader();
+                    let tosha256 = new FileReader();
                     reader.readAsDataURL(selectedFile);
-                    
+
                     // const loadPromise = reader.onloadend=async (e)=>{
                     let promise = new Promise((resolve, reject) => {
                         reader.onloadend=async (e)=>{
-                            
+                            let CryptoJS = require("crypto-js");
+                            let base64 = e.target.result;
+                            let base64Content = base64.split(",")[1]; 
+                            let wordArray = CryptoJS.enc.Base64.parse(base64Content);
+                            let hash = CryptoJS.SHA256(wordArray);
+
                             files.push({_file:e.target.result,_fileName:selectedFile.name})
                             const res = await fetch(e.target.result);
                             const buffer = await res.arrayBuffer();
@@ -98,6 +147,7 @@ const PdfViewer = () => {
                             const pdf = await loadingTask.promise;
 
                             for (let i = 1; i <= pdf.numPages; i++) {
+                                finalText += 'PAGENUM:'+ i.toString()+'[*]';
                                 const page = await pdf.getPage(i);
 
                                 const textContent = await page.getTextContent();
@@ -105,7 +155,11 @@ const PdfViewer = () => {
 
                                 finalText += strings.join(" ") + "\n";
                             }
-                            
+                            fileContents.push({fileName: selectedFile.name,
+                                                fileUrl: newBlob.url,
+                                                fileText: finalText,
+                                                fileSha256: hash.toString(CryptoJS.enc.Hex),
+                                                fileType:selectedFile.type});
                             // Here finalText is the variable which holds the text content of the PDF
                             resolve();
                         }
@@ -122,9 +176,12 @@ const PdfViewer = () => {
         }
         // await Promise.all(loadPromises);
         await Promise.all(promises); 
+        // 文件上传服务器
+        
+        newSocket.emit('onUpload',fileContents)
         //设置当前文件名
-        updateDocs(finalText)
-        updateVectorDatabase(finalText)
+        // updateDocs(finalText)
+        // updateVectorDatabase(finalText)
         updateFileList(filesName);
         updateFileObjs(files);
         

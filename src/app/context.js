@@ -16,4 +16,14 @@ export const PdfContext = React.createContext({
   currentShowFileObj:'',
   updateCurrentShowFile:()=>{},
   updateCurrentShowFileObj:()=>{},
+
+  seq_id:'',
+  conversationID:'',
+  updateSeq_id:()=>{},
+  updateConversationID:()=>{},
+  sessionID:'',
+  updateSessionID:()=>{},
+    // 添加 socket 和 setSocket
+  socket: null, 
+  setSocket: () => {},
 });

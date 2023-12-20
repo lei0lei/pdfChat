@@ -30,34 +30,23 @@ import { PdfContext } from './context.js';
 
 const MessageParser = ({ children, actions }) => {
   const context = useContext(PdfContext);
-  
+  const { 
+    seq_id,conversationID,sessionID,
+    updateSeq_id,
+    socket,
+     } = useContext(PdfContext);
   const parse = async (message) => {
-    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
-    const rawResponse = await fetch(`${apiUrl}/messageExchange/textMessageUpload`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({docs: context.docs, quiz: message})
-    });
-    console.log({docs: context.docs, quiz: message})
-    const content = await rawResponse.json();
-    console.log(content.message)
-    //move to server
-    // const chain = ConversationalRetrievalQAChain.fromLLM(
-    //   model,
-    //   context.vectordb.asRetriever(),
-    //   {
-    //     memory,
-    //   }
-    // );
-    // const result = await chain.call({
-    //   question: message,
-    // });
-    // console.log({ streamedResponse });
-    actions.handleResponse(content.message.text);
+    socket.emit('onConversation',{message:message,
+                                  seq_id:seq_id,
+                                  conversationID:conversationID,
+                                  sessionID:sessionID})
+    socket.on('answer',(data) => {
+      // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
+      actions.handleResponse(data.result.text);
+      actions.handleResponse('filename: '+data.refFilename+'\n\n'+'pagenum: '+data.refPage);
+      socket.off('answer');
+      updateSeq_id(seq_id+1)})}
     
-  };
 
   return (
     <div>

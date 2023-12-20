@@ -16,7 +16,10 @@ export class PdfProvider extends React.Component {
       this.updateFileObjs = this.updateFileObjs.bind(this);
       this.updateCurrentShowFile = this.updateCurrentShowFile.bind(this);
       this.updateCurrentShowFileObj = this.updateCurrentShowFileObj.bind(this);
-
+      this.updateSeq_id = this.updateSeq_id.bind(this);
+      this.updateConversationID = this.updateConversationID.bind(this);
+      this.updateSessionID = this.updateSessionID.bind(this);
+      this.setSocket = this.setSocket.bind(this);
       // 将 updateMyString 方法和 myString 存在状态中
       this.state = {
         vectordb:'',
@@ -34,6 +37,15 @@ export class PdfProvider extends React.Component {
         updateCurrentShowFile:this.updateCurrentShowFile,
         updateCurrentShowFileObj:this.updateCurrentShowFileObj,
 
+        seq_id:'',
+        conversationID:'',
+        sessionID:'',
+        updateSeq_id:this.updateSeq_id,
+        updateConversationID: this.updateConversationID,
+        updateSessionID:this.updateSessionID,
+
+        socket: null, // 在状态中添加socket
+        setSocket: this.setSocket //在状态中添加setSocket方法，用于更新socket
       };
     }
   
@@ -41,7 +53,20 @@ export class PdfProvider extends React.Component {
     updateFileObjs(files){this.setState({fileObjs:files})}
     updateCurrentShowFile(file){this.setState({currentShowFile:file})}
     updateCurrentShowFileObj(file){this.setState({currentShowFileObj:file})}
+ 
+    setSocket(newSocket) {
+      this.setState({ socket: newSocket });
+  }
 
+    // componentDidMount() {
+    //     // 在组件加载后创建并设置socket连接
+    //     const socket = io('http://localhost:8000/app');
+    //     this.setSocket(socket);
+    // }
+
+    updateSeq_id(id){this.setState({ seq_id: id })}
+    updateConversationID(id){this.setState({ conversationID: id })}
+    updateSessionID(id){this.setState({ sessionID: id })}
     updateDocs(newString) {
         this.setState({ docs: newString });
     }

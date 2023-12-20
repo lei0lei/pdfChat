@@ -9,29 +9,35 @@ import './app.css'
 import { PdfProvider } from './provider.js';
 // import PdfViewer from './PdfViewerx.js'
 import dynamic from 'next/dynamic';
-
-const _PdfProvider = dynamic(() => import('./provider'), {
+import SocketContextComponent from './SocketContextProvider.js';
+// import SocketContext from "./SocketContext";
+const _PdfProvider = dynamic(() => import('./provider.js'), {
+  ssr: false // This line will disable server-side render
+});
+// const _SocketContextComponent = dynamic(() => import('./SocketContextProvider.js'), {
+//   ssr: false // This line will disable server-side render
+// });
+const _PdfViewer = dynamic(() => import('./PdfViewerx.js'), {
   ssr: false // This line will disable server-side render
 });
 
-const _PdfViewer = dynamic(() => import('./PdfViewerx'), {
-  ssr: false // This line will disable server-side render
-});
-
-const _Navigation = dynamic(() => import('./Navigation'), {
+const _Navigation = dynamic(() => import('./Navigation.js'), {
   ssr: false // This line will disable server-side render
 });
 
 export default function Home() {
   return (
     <>
+    {/* <SocketContext.Provider value={null}> */}
+      <div>
       <_PdfProvider>
         <div>
         <_Navigation />
         </div>
         <_PdfViewer />
        </_PdfProvider>
-       
+       </div>
+       {/* </SocketContext.Provider> */}
     </>
   );
 }
