@@ -57,8 +57,8 @@ const PdfViewer = () => {
         
         //创建socket连接
         const io = require('socket.io-client');
-        // const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws');
-        const newSocket = io('ws://localhost:8080/ws');
+        const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws');
+        // const newSocket = io('ws://localhost:8080/ws');
         newSocket.on('connect', () => {
             setSocket(newSocket);
             console.log('WebSocket连接已打开!');
