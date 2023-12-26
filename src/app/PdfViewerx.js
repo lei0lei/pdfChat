@@ -115,11 +115,11 @@ const PdfViewer = () => {
             filesName.push(selectedFile.name)
             finalText += 'FILENAME:'+ selectedFile.name+'[*]';
             //上传文件到vercel
-            const newBlob = await upload(selectedFile.name, selectedFile, {
-                access: 'public',
-                handleUploadUrl: '/api/pdf/upload2blob',
-            });
-            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
+            // const newBlob = await upload(selectedFile.name, selectedFile, {
+            //     access: 'public',
+            //     handleUploadUrl: '/api/pdf/upload2blob',
+            // });
+            // const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
             
 
             if(selectedFile){
@@ -137,31 +137,59 @@ const PdfViewer = () => {
                             let base64Content = base64.split(",")[1]; 
                             let wordArray = CryptoJS.enc.Base64.parse(base64Content);
                             let hash = CryptoJS.SHA256(wordArray);
+                            let _fileUrl = null;
+                            //检测文件存在性
+                            // await new Promise((r) => {
+                            new Promise((resolve, reject) => {
+                                    newSocket.emit('findFile',hash.toString(CryptoJS.enc.Hex),async (response) => {
+                                        if(!response){
+                                            let blob = null;
+                                            console.log('on upload file')
+                                            const uploadResponse = await fetch('/api/pdf/upload2blob', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ file: e.target.result, name: selectedFile.name })
+                                            });
+                                            const uploadResponseData = await uploadResponse.json();
+                                            console.log(uploadResponseData)
+                                            _fileUrl = uploadResponseData.url
+                                            console.log(_fileUrl)
+                                            resolve(uploadResponse);           
+                                        }else{resolve()}
+                                        
+                                    });
+                            }).then(async () => {
 
-                            files.push({_file:e.target.result,_fileName:selectedFile.name})
-                            const res = await fetch(e.target.result);
-                            const buffer = await res.arrayBuffer();
-                            
-                            // 加载PDF文档
-                            let loadingTask = pdfjsLib.getDocument({data: buffer});
-                            const pdf = await loadingTask.promise;
+                                files.push({_file:e.target.result,_fileName:selectedFile.name})
+                                const res = await fetch(e.target.result);
+                                const buffer = await res.arrayBuffer();
+                                // console.log(uploadResponse.url)
+                                // 加载PDF文档
+                                let loadingTask = pdfjsLib.getDocument({data: buffer});
+                                const pdf = await loadingTask.promise;
 
-                            for (let i = 1; i <= pdf.numPages; i++) {
-                                finalText += 'PAGENUM:'+ i.toString()+'[*]';
-                                const page = await pdf.getPage(i);
+                                for (let i = 1; i <= pdf.numPages; i++) {
+                                    finalText += 'PAGENUM:'+ i.toString()+'[*]';
+                                    const page = await pdf.getPage(i);
 
-                                const textContent = await page.getTextContent();
-                                const strings = textContent.items.map(item => item.str);
+                                    const textContent = await page.getTextContent();
+                                    const strings = textContent.items.map(item => item.str);
 
-                                finalText += strings.join(" ") + "\n";
-                            }
-                            fileContents.push({fileName: selectedFile.name,
-                                                fileUrl: newBlob.url,
-                                                fileText: finalText,
-                                                fileSha256: hash.toString(CryptoJS.enc.Hex),
-                                                fileType:selectedFile.type});
-                            // Here finalText is the variable which holds the text content of the PDF
-                            resolve();
+                                    finalText += strings.join(" ") + "\n";
+                                }
+                                console.log(_fileUrl)
+                                fileContents.push({fileName: selectedFile.name,
+                                                    fileUrl: _fileUrl||null,
+                                                    fileText: finalText,
+                                                    fileSha256: hash.toString(CryptoJS.enc.Hex),
+                                                    fileType:selectedFile.type});
+                                // Here finalText is the variable which holds the text content of the PDF
+                                resolve();
+                            })
+                            .catch((error) => {
+                            // 在这里处理任何错误
+                            console.error("Error: ", error);
+                            });
                         }
                     });
                     promises.push(promise);
@@ -177,7 +205,7 @@ const PdfViewer = () => {
         // await Promise.all(loadPromises);
         await Promise.all(promises); 
         // 文件上传服务器
-        
+        console.log(fileContents)
         newSocket.emit('onUpload',fileContents)
         //设置当前文件名
         // updateDocs(finalText)

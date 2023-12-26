@@ -42,8 +42,10 @@ const MessageParser = ({ children, actions }) => {
                                   sessionID:sessionID})
     socket.on('answer',(data) => {
       // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
+      console.log(data.result)
+      console.log(data.ref)
       actions.handleResponse(data.result.text);
-      actions.handleResponse('filename: '+data.refFilename+'\n\n'+'pagenum: '+data.refPage);
+      actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
       socket.off('answer');
       updateSeq_id(seq_id+1)})}
     
