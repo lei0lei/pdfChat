@@ -2,13 +2,13 @@ import { BlobServiceClient } from "@azure/storage-blob";
 import { NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '20mb', // adjust this limit according to your needs.
-    },
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: {
+//       sizeLimit: '20mb', // adjust this limit according to your needs.
+//     },
+//   },
+// };
 
 export async function POST(request: Request): Promise<NextResponse> {
     console.log('uploading file')
