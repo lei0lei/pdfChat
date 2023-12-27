@@ -4,7 +4,7 @@
 // module.exports = nextConfig
 module.exports = {
   experimental: { 
-    serverMinification: true 
+    serverMinification: false 
   },
     webpack: (config, options) => {
       config.module.rules.push({
