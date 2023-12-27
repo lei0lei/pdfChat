@@ -54,7 +54,6 @@ const PdfViewer = () => {
             socket.disconnect();
             updateSeq_id(0);
           }
-        
         //创建socket连接
         const io = require('socket.io-client');
         const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws');
