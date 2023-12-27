@@ -3,6 +3,9 @@
 
 // module.exports = nextConfig
 module.exports = {
+  experimental: { 
+    serverMinification: true 
+  },
     webpack: (config, options) => {
       config.module.rules.push({
         test: /\.node$/,
