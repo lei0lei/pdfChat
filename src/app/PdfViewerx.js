@@ -9,17 +9,18 @@ import {MyChatbot} from './Chatbot.js'
 import { PdfContext } from './context.js'; 
 import * as pdfjsLib from 'pdfjs-dist';
 // import {  type PutBlobResult } from '@vercel/blob';
-import { upload } from '@vercel/blob/client';
-import io from 'socket.io-client'
+// import { upload } from '@vercel/blob/client';
+// import io from 'socket.io-client'
 import React, { useContext, useEffect } from 'react';
 // import SocketContext from './SocketContext';
-import { createHash } from 'crypto';
-import { BlobServiceClient } from '@azure/storage-blob';
+// import { createHash } from 'crypto';
+// import { BlobServiceClient } from '@azure/storage-blob';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
     const [blob, setBlob] = useState(null);
-    const { currentShowFile,
+    const { tokens,
+            currentShowFile,
             currentShowFileObj,
             updateFileList,
             updateFileObjs, 

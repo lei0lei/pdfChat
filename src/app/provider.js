@@ -10,6 +10,7 @@ export class PdfProvider extends React.Component {
       super(props);
       
       // 初始化并绑定 updateMyString 函数
+      this.updateTokens = this.updateTokens.bind(this); 
       this.updateDocs = this.updateDocs.bind(this);
       this.updateVectorDatabase = this.updateVectorDatabase.bind(this)
       this.updateFileList = this.updateFileList.bind(this);
@@ -45,7 +46,10 @@ export class PdfProvider extends React.Component {
         updateSessionID:this.updateSessionID,
 
         socket: null, // 在状态中添加socket
-        setSocket: this.setSocket //在状态中添加setSocket方法，用于更新socket
+        setSocket: this.setSocket, //在状态中添加setSocket方法，用于更新socket
+
+        tokens: null,
+        updateTokens: this.updateTokens,
       };
     }
   
@@ -53,7 +57,9 @@ export class PdfProvider extends React.Component {
     updateFileObjs(files){this.setState({fileObjs:files})}
     updateCurrentShowFile(file){this.setState({currentShowFile:file})}
     updateCurrentShowFileObj(file){this.setState({currentShowFileObj:file})}
- 
+    updateTokens(tokens){this.setState({tokens:tokens})}
+
+
     setSocket(newSocket) {
       this.setState({ socket: newSocket });
   }
@@ -72,30 +78,6 @@ export class PdfProvider extends React.Component {
     }
 
     async updateVectorDatabase(newString) {
-      // do nothing ,move to server
-        // console.log(newString)
-        // const textSplitter = new RecursiveCharacterTextSplitter({
-        //   chunkSize: 1500,
-        //   chunkOverlap: 200,
-        // });
-        // const splitDocs = await textSplitter.splitDocuments([
-        //   new Document({ pageContent: newString }),
-        // ])
-        // // const splitDocs =   await textSplitter.splitDocuments(texts);
-        // let embeddings=null;
-        // try{
-
-        //   // embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
-          
-        //   embeddings = new OpenAIEmbeddings({openAIApiKey:process.env.REACT_APP_openAIApiKey});
-        //   // console.log(process.env.REACT_APP_openAIApiKey)
-        // } catch(err) {
-        //   let openAIApiKey = prompt('No api key found, insert here')
-        //   embeddings = new OpenAIEmbeddings({openAIApiKey:openAIApiKey});
-
-        // }
-        // const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
-        // this.setState({ vectordb: vectorStore });
     }
     
     render() {

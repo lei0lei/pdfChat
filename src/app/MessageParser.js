@@ -30,7 +30,8 @@ import { PdfContext } from './context.js';
 
 const MessageParser = ({ children, actions }) => {
   const context = useContext(PdfContext);
-  const { 
+  const {
+    tokens, 
     seq_id,conversationID,sessionID,
     updateSeq_id,
     socket,

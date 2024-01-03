@@ -26,4 +26,8 @@ export const PdfContext = React.createContext({
     // 添加 socket 和 setSocket
   socket: null, 
   setSocket: () => {},
+
+  tokens:null,
+  updateTokens:()=>{},
+
 });
