@@ -61,21 +61,21 @@ const PdfViewer = () => {
           }
         //创建socket连接
         const io = require('socket.io-client');
-        // const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
-        //     extraHeaders: {
-        //         Authorization: `Bearer ${tokens}`
-        //       },
-        //     
-        // });
+        const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
+            extraHeaders: {
+                Authorization: `Bearer ${tokens}`
+              },
+            
+        });
         console.log('connect')
         // console.log(tokens)
         console.log(localStorage.getItem("token"))
-        const newSocket = io('ws://localhost:8080/ws',{
-            extraHeaders: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
-              },
-            //   reconnection: true
-        });
+        // const newSocket = io('ws://localhost:8080/ws',{
+        //     extraHeaders: {
+        //         Authorization: `Bearer ${localStorage.getItem("token")}`
+        //       },
+        //     //   reconnection: true
+        // });
         // console.log(tokens)
         newSocket.on('connect', () => {
             setSocket(newSocket);
