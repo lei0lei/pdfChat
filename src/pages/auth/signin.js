@@ -30,9 +30,9 @@ export default function Login() {
       if (res.ok) {
         const json = await res.json()
        
-        // localStorage.setItem("token", json.token)
-        // console.log(json)
-        updateTokens(json.token)
+        localStorage.setItem("token", json.token)
+        console.log(json)
+        // updateTokens(json.token)
         router.push("/")
       } else {
         alert("Bad credentials")

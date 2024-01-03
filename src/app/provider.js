@@ -57,7 +57,7 @@ export class PdfProvider extends React.Component {
     updateFileObjs(files){this.setState({fileObjs:files})}
     updateCurrentShowFile(file){this.setState({currentShowFile:file})}
     updateCurrentShowFileObj(file){this.setState({currentShowFileObj:file})}
-    updateTokens(tokens){this.setState({tokens:tokens})}
+    updateTokens(token){this.setState({tokens:token})}
 
 
     setSocket(newSocket) {

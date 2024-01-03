@@ -18,8 +18,10 @@ import React, { useContext, useEffect } from 'react';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
+
     const [blob, setBlob] = useState(null);
-    const { tokens,
+    const { //tokens,
+        //updateTokens,
             currentShowFile,
             currentShowFileObj,
             updateFileList,
@@ -33,6 +35,8 @@ const PdfViewer = () => {
             updateSessionID,
             socket,
             setSocket } = useContext(PdfContext);
+            // console.log(tokens)
+            // updateTokens(localStorage.getItem("token"))
     useEffect(() => {
         console.log(currentShowFile)
                 // 放置组件需要做的操作，例如 fetch 数据，或者更新状态
@@ -57,16 +61,22 @@ const PdfViewer = () => {
           }
         //创建socket连接
         const io = require('socket.io-client');
-        const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
-            extraHeaders: {
-                Authorization: `Bearer ${tokens}`
-              }
-        });
-        // const newSocket = io('ws://localhost:8080/ws',{
+        // const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
         //     extraHeaders: {
         //         Authorization: `Bearer ${tokens}`
-        //       }
+        //       },
+        //     
         // });
+        console.log('connect')
+        // console.log(tokens)
+        console.log(localStorage.getItem("token"))
+        const newSocket = io('ws://localhost:8080/ws',{
+            extraHeaders: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+              },
+            //   reconnection: true
+        });
+        // console.log(tokens)
         newSocket.on('connect', () => {
             setSocket(newSocket);
             console.log('WebSocket连接已打开!');
