@@ -63,7 +63,7 @@ const PdfViewer = () => {
         const io = require('socket.io-client');
         const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
             extraHeaders: {
-                Authorization: `Bearer ${tokens}`
+                Authorization: `Bearer ${localStorage.getItem("token")}`
               },
             
         });
