@@ -29,7 +29,7 @@ export default function Login() {
       })
       if (res.ok) {
         const json = await res.json()
-       
+        localStorage.setItem("username", state.username)
         localStorage.setItem("token", json.token)
         console.log(json)
         // updateTokens(json.token)

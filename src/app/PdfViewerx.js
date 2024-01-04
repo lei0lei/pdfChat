@@ -55,6 +55,7 @@ const PdfViewer = () => {
     let _sessionID,_conversationID,_seqID;
     const handleFile = async (e) =>{
         // 重新建立socket连接，每次点击上传都会重新建立socket连接关闭旧的。
+        if(localStorage.getItem('token')===null){alert('Please signin.')}
         if (socket) {
             socket.disconnect();
             updateSeq_id(0);
