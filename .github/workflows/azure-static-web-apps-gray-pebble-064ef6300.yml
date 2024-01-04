@@ -1,6 +1,6 @@
 name: Azure Static Web Apps CI/CD
 env:
-          node-version: '20.x'
+    node_version: '20.x'
 on:
   push:
     branches:
