@@ -33,6 +33,7 @@ jobs:
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
+          node-version: '20.x'
           REACT_APP_openAIApiKey: ${{secrets.REACT_APP_openAIApiKey}}
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
