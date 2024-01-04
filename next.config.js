@@ -3,6 +3,8 @@
 
 // module.exports = nextConfig
 module.exports = {
+  target: "serverless",
+  trailingSlash: true,
   experimental: { 
     serverMinification: false 
   },
