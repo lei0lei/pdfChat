@@ -3,6 +3,7 @@
 
 // module.exports = nextConfig
 module.exports = {
+  output: "standalone",
   experimental: { 
     serverMinification: false 
   },
