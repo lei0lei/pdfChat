@@ -15,3 +15,18 @@
   width: 100%;
   min-height: 100vh;
 }
+
+@keyframes progress {
+  0% {
+      background-position: 200% 0;
+  }
+  100% {
+      background-position: -200% 0;
+  }
+}
+
+.progress-bar {
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, #357edd 50%, #ffffff 50%);
+  animation: progress 2s linear infinite;
+}

@@ -29,7 +29,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       buffer,
       buffer.length
     );
-    console.log('slslsll')
     console.log(uploadBlobResponse)
     const jsonResponse = { success: true, data: uploadBlobResponse, url: tmpid+'+'+name}
 

@@ -16,55 +16,9 @@ import React, { useContext, useEffect } from 'react';
 // import { createHash } from 'crypto';
 // import { BlobServiceClient } from '@azure/storage-blob';
 
-
-// 一个函数用于上传文件
-function uploadFile(file, onProgress) {
-    return new Promise((resolve, reject) => {
-      const req = new Request('/api/pdf/upload2blob', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: file, name: file.name })
-      });
-  
-      const xhr = new XMLHttpRequest();
-      
-      xhr.upload.addEventListener('progress', event => {
-        const uploadedBytes = event.loaded;
-        const totalBytes = event.total;
-        const progress = (uploadedBytes / totalBytes) * 100;
-        onProgress(Math.floor(progress)); // 发送进度回调
-      });
-  
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        if (progress < 95) {
-          progress += Math.random() * 5; // 随机增加 0.5% 到 5% 的进度
-          onProgress(Math.floor(Math.min(progress, 100))); // 发送进度回调
-        } else {
-          clearInterval(progressInterval);
-        }
-      }, 100); // 每 100 毫秒更新一次进度
-  
-      xhr.onloadend = () => {
-        clearInterval(progressInterval); // 清除定时器
-        if (xhr.status === 200) {
-          const uploadResponseData = JSON.parse(xhr.responseText);
-          onProgress(10); // 上传完成，设置进度为 100%
-          resolve(uploadResponseData);
-        } else {
-          reject(`Upload failed with status: ${xhr.status}`);
-        }
-      };
-  
-      xhr.open(req.method, req.url);
-      xhr.send(req.body);
-    });
-  }
-
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [uploading, setUploading] = useState(false);
+
     const [blob, setBlob] = useState(null);
     const { //tokens,
         //updateTokens,
@@ -155,6 +109,8 @@ const PdfViewer = () => {
         // 将文件存放到后端blobs
         // 提取文件的文本-附带文件链接及sha256传送给后端-构建vectordb-存放到后端数据库中
         
+        
+        
         //更新文件名和文件列表
         function FileContent(fileName, fileUrl, fileText, fileSha256, fileType) {
             this.fileName = fileName;
@@ -173,7 +129,6 @@ const PdfViewer = () => {
         let files_contents = [];
         let files_sha256 = [];
         let fileContents = [];
-        
         for (let selectedFile of e.target.files){
             let finalText = "";
             filesName.push(selectedFile.name)
@@ -185,7 +140,7 @@ const PdfViewer = () => {
             // });
             // const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'; 
             
-            
+
             if(selectedFile){
                 if(selectedFile&&allowedFiles.includes(selectedFile.type)){
                     
@@ -209,22 +164,16 @@ const PdfViewer = () => {
                                         if(!response){
                                             let blob = null;
                                             console.log('on upload file')
-
-                                            // setUploading(true); // 开始上传，设置 uploading 为 true
-                                            try {
-                                                const uploadResponseData = await uploadFile(selectedFile, progress => {
-                                                  setUploadProgress(progress);
-                                                });
-                                                console.log(uploadResponseData);
-                                                _fileUrl = uploadResponseData.url;
-                                                console.log(_fileUrl);
-                                                setUploading(false); // 上传结束，设置 uploading 为 false
-                                                resolve(uploadResponseData);
-                                            } catch (error) {
-                                                console.error(error);
-                                                
-                                                reject(error);
-                                            }          
+                                            const uploadResponse = await fetch('/api/pdf/upload2blob', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ file: e.target.result, name: selectedFile.name })
+                                            });
+                                            const uploadResponseData = await uploadResponse.json();
+                                            console.log(uploadResponseData)
+                                            _fileUrl = uploadResponseData.url
+                                            console.log(_fileUrl)
+                                            resolve(uploadResponse);           
                                         }else{resolve()}
                                         
                                     });
@@ -272,11 +221,8 @@ const PdfViewer = () => {
             console.log('please select PDF');
             }
         }
-        
         // await Promise.all(loadPromises);
-        setUploading(true);
-        await Promise.all(promises);
-        setUploading(false); 
+        await Promise.all(promises); 
         // 文件上传服务器
         console.log(fileContents)
         newSocket.emit('onUpload',fileContents)
@@ -343,7 +289,7 @@ const PdfViewer = () => {
                         {/* we will display error message in case user select some file
                         other than pdf */}
                         {pdfError&&<span className='text-danger'>{pdfError}</span>}
-                        加载PDF文件 (单文件不得超过4MB)
+                        加载PDF文件
                         </div>
                 </div>
                 <div className= 'parent'>
@@ -396,20 +342,6 @@ const PdfViewer = () => {
                     
                 </div>
             </div>
-            {uploading && (
-                <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white p-10 rounded shadow-md w-1/3">
-                        <h2 className="text-2xl font-bold mb-2 text-blue-500">上传进度</h2>
-                        <div className="h-4 w-full bg-gray-200 rounded">
-                            <div style={{
-                                width: `${uploadProgress}%`,
-                                transition: 'width 0.2s ease-in-out'
-                            }} className="h-full bg-blue-500 rounded progress-bar"></div>
-                        </div>
-                        <p className="mt-2 text-lg text-black">{uploadProgress}%</p>
-                    </div>
-                </div>
-            )}
         </>
     );
 
