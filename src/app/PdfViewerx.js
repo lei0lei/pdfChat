@@ -18,48 +18,7 @@ import React, { useContext, useEffect } from 'react';
 
 
 // 一个函数用于上传文件
-function uploadFile(file, onProgress) {
-    return new Promise((resolve, reject) => {
-      const req = new Request('/api/pdf/upload2blob', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: file, name: file.name })
-      });
-  
-      const xhr = new XMLHttpRequest();
-      
-      xhr.upload.addEventListener('progress', event => {
-        const uploadedBytes = event.loaded;
-        const totalBytes = event.total;
-        const progress = (uploadedBytes / totalBytes) * 100;
-        onProgress(Math.floor(progress)); // 发送进度回调
-      });
-  
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        if (progress < 95) {
-          progress += Math.random() * 5; // 随机增加 0.5% 到 5% 的进度
-          onProgress(Math.floor(Math.min(progress, 100))); // 发送进度回调
-        } else {
-          clearInterval(progressInterval);
-        }
-      }, 100); // 每 100 毫秒更新一次进度
-  
-      xhr.onloadend = () => {
-        clearInterval(progressInterval); // 清除定时器
-        if (xhr.status === 200) {
-          const uploadResponseData = JSON.parse(xhr.responseText);
-          onProgress(10); // 上传完成，设置进度为 100%
-          resolve(uploadResponseData);
-        } else {
-          reject(`Upload failed with status: ${xhr.status}`);
-        }
-      };
-  
-      xhr.open(req.method, req.url);
-      xhr.send(req.body);
-    });
-  }
+
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
@@ -204,27 +163,21 @@ const PdfViewer = () => {
                             let _fileUrl = null;
                             //检测文件存在性
                             // await new Promise((r) => {
-                            new Promise((resolve, reject) => {
+                                new Promise((resolve, reject) => {
                                     newSocket.emit('findFile',hash.toString(CryptoJS.enc.Hex),async (response) => {
                                         if(!response){
                                             let blob = null;
                                             console.log('on upload file')
-
-                                            // setUploading(true); // 开始上传，设置 uploading 为 true
-                                            try {
-                                                const uploadResponseData = await uploadFile(selectedFile, progress => {
-                                                  setUploadProgress(progress);
-                                                });
-                                                console.log(uploadResponseData);
-                                                _fileUrl = uploadResponseData.url;
-                                                console.log(_fileUrl);
-                                                setUploading(false); // 上传结束，设置 uploading 为 false
-                                                resolve(uploadResponseData);
-                                            } catch (error) {
-                                                console.error(error);
-                                                
-                                                reject(error);
-                                            }          
+                                            const uploadResponse = await fetch('/api/pdf/upload2blob', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ file: e.target.result, name: selectedFile.name })
+                                            });
+                                            const uploadResponseData = await uploadResponse.json();
+                                            console.log(uploadResponseData)
+                                            _fileUrl = uploadResponseData.url
+                                            console.log(_fileUrl)
+                                            resolve(uploadResponse);           
                                         }else{resolve()}
                                         
                                     });
