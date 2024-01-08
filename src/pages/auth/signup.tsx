@@ -1,6 +1,7 @@
 import '../../app/globals.css'
 import { useRouter } from "next/router"
 import { useState } from "react"
+import Link from 'next/link';
 
 export default function Signup() {
     const router = useRouter()
@@ -128,7 +129,8 @@ export default function Signup() {
                 </button>
               </div>
             </form>
-  
+            <Link href="/auth/signin" className="font-semibold text-indigo-600 hover:text-indigo-500">Sign in  👉
+            </Link>
             {/* <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
               <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">

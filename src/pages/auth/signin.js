@@ -1,7 +1,8 @@
 import { useRouter } from "next/router"
 import { useState,useContext } from "react"
 import '../../app/globals.css'
-import { PdfContext } from '../../app/context.js'; 
+import Link from 'next/link';
+import { PdfContext } from '../../app/dashboard/context.js'; 
 export default function Login() {
     const router = useRouter()
     const { updateTokens} = useContext(PdfContext);
@@ -33,7 +34,7 @@ export default function Login() {
         localStorage.setItem("token", json.token)
         console.log(json)
         // updateTokens(json.token)
-        router.push("/")
+        router.push("/dashboard")
       } else {
         alert("Bad credentials")
       }
@@ -115,6 +116,8 @@ export default function Login() {
                 </button>
               </div>
             </form>
+            <Link href="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">Sign up  👉
+            </Link>
   
           </div>
         </div>

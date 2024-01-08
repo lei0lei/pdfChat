@@ -23,6 +23,7 @@ import React, { useContext, useEffect } from 'react';
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
     const [uploadProgress, setUploadProgress] = useState(0);
+    const [showProgressBar, setShowProgressBar] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [blob, setBlob] = useState(null);
     const { //tokens,
@@ -163,7 +164,7 @@ const PdfViewer = () => {
                             let _fileUrl = null;
                             //检测文件存在性
                             // await new Promise((r) => {
-                                new Promise((resolve, reject) => {
+                            new Promise((resolve, reject) => {
                                     newSocket.emit('findFile',hash.toString(CryptoJS.enc.Hex),async (response) => {
                                         if(!response){
                                             let blob = null;
@@ -177,8 +178,23 @@ const PdfViewer = () => {
                                             console.log(uploadResponseData)
                                             _fileUrl = uploadResponseData.url
                                             console.log(_fileUrl)
+                                            let progress = 0;
+                                            const interval = setInterval(() => {
+                                            if (progress >= 100) {
+                                                clearInterval(interval);
+                                            }
+                                            setUploadProgress(progress);
+                                            progress += 10;
+                                            }, 500);
+
+                                            setTimeout(() => {
+                                            clearInterval(interval);
+                                            setUploadProgress(100);
+                                            }, 3000);
                                             resolve(uploadResponse);           
-                                        }else{resolve()}
+                                        }else{
+                                        resolve()
+                                        setUploadProgress(100)}
                                         
                                     });
                             }).then(async () => {
@@ -227,9 +243,11 @@ const PdfViewer = () => {
         }
         
         // await Promise.all(loadPromises);
+        setShowProgressBar(true);
         setUploading(true);
         await Promise.all(promises);
         setUploading(false); 
+        setShowProgressBar(false);
         // 文件上传服务器
         console.log(fileContents)
         newSocket.emit('onUpload',fileContents)
@@ -296,7 +314,7 @@ const PdfViewer = () => {
                         {/* we will display error message in case user select some file
                         other than pdf */}
                         {pdfError&&<span className='text-danger'>{pdfError}</span>}
-                        加载PDF文件 (单文件不得超过4MB)
+                        加载PDF文件
                         </div>
                 </div>
                 <div className= 'parent'>
@@ -349,20 +367,31 @@ const PdfViewer = () => {
                     
                 </div>
             </div>
-            {uploading && (
+            {uploading && showProgressBar && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-10 rounded shadow-md w-1/3">
-                        <h2 className="text-2xl font-bold mb-2 text-blue-500">上传进度</h2>
-                        <div className="h-4 w-full bg-gray-200 rounded">
-                            <div style={{
-                                width: `${uploadProgress}%`,
-                                transition: 'width 0.2s ease-in-out'
-                            }} className="h-full bg-blue-500 rounded progress-bar"></div>
-                        </div>
-                        <p className="mt-2 text-lg text-black">{uploadProgress}%</p>
+                    <h2 className="text-2xl font-bold mb-2 text-blue-500">上传进度</h2>
+                    <div className="h-4 w-full bg-gray-200 rounded relative">
+                        <div
+                        style={{
+                            width: `${uploadProgress}%`,
+                            transition: 'width 0.2s ease-in-out',
+                            position: 'absolute',
+                            left: '0',
+                            top: '0',
+                            height: '100%',
+                            backgroundColor: '#1f81e7',
+                            borderRadius: 'inherit',
+                        }}
+                        className="rounded progress-bar"
+                        ></div>
+                    </div>
+                    <p className="mt-2 text-lg text-black">
+                        {uploadProgress === 100 ? '上传完成' : `${uploadProgress}%`}
+                    </p>
                     </div>
                 </div>
-            )}
+                )}
         </>
     );
 

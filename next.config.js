@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
+const withImages = require('next-images');
+
 
 
 // module.exports = nextConfig
-module.exports = {
+module.exports = withImages({
   output: "standalone",
   experimental: { 
     serverMinification: false 
@@ -15,7 +17,7 @@ module.exports = {
 
       return config;
     },
-}
+});
 
 // next.config.js
 
