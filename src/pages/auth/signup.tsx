@@ -29,7 +29,7 @@ export default function Signup() {
       })
       console.log(res)
       if (res.ok) {
-        alert("user registered success")
+        alert("注册成功！")
         // router.push("/signin")
         router.push("/auth/signin")
       }
@@ -52,7 +52,7 @@ export default function Signup() {
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-              Sign up
+              注册
             </h2>
           </div>
   
@@ -61,14 +61,13 @@ export default function Signup() {
 
             <div>
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-white">
-                  Username
+                  用户名
                 </label>
                 <div className="mt-2">
                   <input
                     id="username"
                     name="username"
                     type="username"
-                    placeholder="username" 
                     value={state.username}
                     onChange={handleChange}
                     required
@@ -80,7 +79,7 @@ export default function Signup() {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
-                  Email address
+                  邮箱
                 </label>
                 <div className="mt-2">
                   <input
@@ -100,7 +99,7 @@ export default function Signup() {
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="block text-sm font-medium leading-6 text-white">
-                    Password
+                    密码
                   </label>
                   
                 </div>
@@ -125,11 +124,11 @@ export default function Signup() {
                   onClick={handleSubmit}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign up
+                  注册
                 </button>
               </div>
             </form>
-            <Link href="/auth/signin" className="font-semibold text-indigo-600 hover:text-indigo-500">Sign in  👉
+            <Link href="/auth/signin" className="font-semibold text-indigo-600 hover:text-indigo-500">点我登录  👉
             </Link>
             {/* <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}

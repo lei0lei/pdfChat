@@ -7,7 +7,7 @@ import cursorUrl from './custom-cursor.svg';
 
 export default function HomePage() {
   const [typedText, setTypedText] = useState('');
-  const targetText = 'We utilize ChatGPT to construct a knowledge base based on personal pdfs. 🤖';
+  const targetText = '我们利用ChatGPT来为您的PDF文档构建私人知识库。 🤖';
   const cursorAnimationDuration = 1.5; // 光标闪烁动画的持续时间（秒）
   const delayBeforeRestart = 30000; // 循环开始前的等待时间（毫秒）
 
@@ -46,18 +46,18 @@ export default function HomePage() {
         <nav className="flex justify-between items-center mb-8">
           <div>
             <Link href="/auth/signin" className="text-white text-lg mr-4">
-              Login
+              登录
             </Link>
             <Link href="/auth/signup" className="text-white text-lg mr-4">
-              Register
+              注册
             </Link>
             <Link href="/about" className="text-white text-lg">
-              About
+              关于我们
             </Link>
           </div>
         </nav>
         <div className="text-white">
-          <h1 className="text-4xl font-bold mb-4">Welcome to the Private Domain Database 💭</h1>
+          <h1 className="text-4xl font-bold mb-4">欢迎使用私域数据库 💭</h1>
           <h3 className="text-4xl font-bold">
             <span>{typedText}</span>
             <span className="cursor-animation" style={{ animationDuration: `${cursorAnimationDuration}s` }} />

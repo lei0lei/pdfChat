@@ -354,7 +354,7 @@ const PdfViewer = () => {
                                         </Worker>
                                         )}
 
-                                        {!currentShowFileObj._file&&<p>No file is selected yet</p>}
+                                        {!currentShowFileObj._file&&<p>请选择文件</p>}
                                     </div>
                                 </div>
                             </div>

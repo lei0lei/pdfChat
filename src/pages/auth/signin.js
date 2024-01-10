@@ -36,7 +36,7 @@ export default function Login() {
         // updateTokens(json.token)
         router.push("/dashboard")
       } else {
-        alert("Bad credentials")
+        alert("用户名或密码错误")
       }
     }
     return (
@@ -57,7 +57,7 @@ export default function Login() {
               alt="Your Company"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-              Sign in to your account
+              登录您的账户
             </h2>
           </div>
   
@@ -65,7 +65,7 @@ export default function Login() {
             <form className="space-y-6" action="#" method="POST">
               <div>
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-white">
-                  Username
+                  用户名
                 </label>
                 <div className="mt-2">
                   <input
@@ -84,11 +84,11 @@ export default function Login() {
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="block text-sm font-medium leading-6 text-white">
-                    Password
+                    密码
                   </label>
                   <div className="text-sm">
                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
+                      忘记密码?
                     </a>
                   </div>
                 </div>
@@ -112,11 +112,11 @@ export default function Login() {
                   onClick={handleSubmit}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  登录
                 </button>
               </div>
             </form>
-            <Link href="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">Sign up  👉
+            <Link href="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">点我注册  👉
             </Link>
   
           </div>

@@ -54,7 +54,7 @@ export const Sidebar = () => {
             >
               <div className="border-b-2 border-zinc-800">
                 <div className="flex items-center justify-between p-5">
-                  <span>Welcome</span>
+                  <span>欢迎</span>
                   <button
                     onClick={toggleSidebar}
                     className="p-3 border-2 border-zinc-800 rounded-xl"
@@ -118,11 +118,11 @@ export const Sidebar = () => {
 };
 
 const items = [
-    { title: 'Home', Icon: BiHomeSmile, href: '#' },
-    { title: 'About', Icon: BiUser, href: '#' },
-    { title: 'Contact', Icon: HiOutlineChatBubbleBottomCenterText, href: '#' },
-    { title: 'Settings', Icon: FiSettings, href: '#' },
-    { title: 'Logout', Icon: BiLogOut, href: '#', onClick: handleLogout },
+    { title: '主页', Icon: BiHomeSmile, href: '#' },
+    { title: '关于', Icon: BiUser, href: '#' },
+    { title: '联系我们', Icon: HiOutlineChatBubbleBottomCenterText, href: '#' },
+    { title: '设置', Icon: FiSettings, href: '#' },
+    { title: '登出', Icon: BiLogOut, href: '#', onClick: handleLogout },
   ];
   
   const framerSidebarBackground = {

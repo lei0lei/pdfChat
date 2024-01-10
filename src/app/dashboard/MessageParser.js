@@ -1,33 +1,11 @@
+"use client"; 
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import React, { useContext } from 'react';
 import { BufferMemory } from "langchain/memory";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { PdfContext } from './context.js';
-
-// move to server
-// let model = null
-
-// let streamedResponse = "";
-// try{
-          
-//   // model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,openAIApiKey:process.env.REACT_APP_openAIApiKey});
-//   model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,callbacks: [{
-//     handleLLMNewToken(token) {
-//         streamedResponse += token;
-        
-//     },}],streaming: true,openAIApiKey:process.env.REACT_APP_openAIApiKey});
-  
-// } catch(err) {
-// //   alert('Api key not available');
-//   let openAIApiKey = prompt('No api key found, insert here')
-//   model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,openAIApiKey:openAIApiKey});
-// }
-// // const model = new ChatOpenAI({ modelName: "gpt-3.5-turbo" ,openAIApiKey:process.env.REACT_APP_openAIApiKey});
-// const memory = new BufferMemory({
-//   memoryKey: "chat_history",
-//   returnMessages: true,
-// });
-
+// import { MathJaxContext, MathJax } from 'react-mathjax2';
+// import { Tex } from 'better-react-mathjax';
 const MessageParser = ({ children, actions }) => {
   const context = useContext(PdfContext);
   const {
@@ -45,6 +23,7 @@ const MessageParser = ({ children, actions }) => {
       // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
       console.log(data.result)
       console.log(data.ref)
+      // actions.handleResponse(<Tex texContent={'\\(E = mc^2\\)'} />);
       actions.handleResponse(data.result.text);
       actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
       socket.off('answer');
