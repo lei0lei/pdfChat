@@ -4,8 +4,7 @@ import React, { useContext } from 'react';
 import { BufferMemory } from "langchain/memory";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { PdfContext } from './context.js';
-// import { MathJaxContext, MathJax } from 'react-mathjax2';
-// import { Tex } from 'better-react-mathjax';
+import { MathJaxContext,MathJax }  from 'better-react-mathjax';
 const MessageParser = ({ children, actions }) => {
   const context = useContext(PdfContext);
   const {
@@ -23,14 +22,16 @@ const MessageParser = ({ children, actions }) => {
       // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
       console.log(data.result)
       console.log(data.ref)
+      actions.handleResponse(<MathJax>{data.result.text} </MathJax>);
       // actions.handleResponse(<Tex texContent={'\\(E = mc^2\\)'} />);
-      actions.handleResponse(data.result.text);
+      // actions.handleResponse(data.result.text);
       actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
       socket.off('answer');
       updateSeq_id(seq_id+1)})}
     
 
   return (
+    <MathJaxContext>
     <div>
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
@@ -39,6 +40,7 @@ const MessageParser = ({ children, actions }) => {
         });
       })}
     </div>
+    </MathJaxContext>
   );
 };
 
