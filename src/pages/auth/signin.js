@@ -116,7 +116,7 @@ export default function Login() {
                 </button>
               </div>
             </form>
-            <Link href="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">点我注册  👉
+            <Link href="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">新用户, 点击这里注册  👉
             </Link>
   
           </div>

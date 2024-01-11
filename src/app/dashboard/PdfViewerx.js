@@ -265,23 +265,26 @@ const PdfViewer = () => {
     return (
         <>
             <div style={{
+                
                 border: '1px solid black',
                 margin: '1rem',
                 padding: '0rem 0rem',
-                height: '7vh',
+                height: '5vh',
             }}>
                 <div style={{
-                            display: 'flexbox',
-                            backgroundColor: '#357edd',
-                            border: 'none',
-                            borderRadius: '4px',
-                            color: '#ffffff',
-                            cursor: 'pointer',
-                            padding: '8px',
-                            width: '100%',
-                            
-                            
-                    }}>
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#357edd',
+                    border: 'none',
+                    borderRadius: '4px',
+                    color: '#ffffff',
+                    cursor: 'pointer',
+                    padding: '8px',
+                    width: '93%',
+                    margin: '0 auto',
+                    height: '5vh'
+                }}>
                     <div
                              style={{
                                 backgroundColor: '#357edd',
@@ -305,7 +308,7 @@ const PdfViewer = () => {
                                     position: 'absolute',
                                     right: 0,
                                     top: 0,
-                                    width: '100%',
+                                    width: '80%',
                                 }}
                                 onChange={handleFile}>
                         
@@ -325,7 +328,7 @@ const PdfViewer = () => {
                                         border: '1px solid rgba(0, 0, 0, 0.3)',
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        height: '100vh',
+                                        height: '80vh',
                                         width: '100%',
                                         
                                     }}
@@ -343,7 +346,7 @@ const PdfViewer = () => {
                                     style={{
                                         flex: 1,
                                         overflow: 'hidden',
-                                        height: '100vh',
+                                        height: '80vh',
                                     }}
                                     >   
                                         {currentShowFileObj && currentShowFileObj._file&&(

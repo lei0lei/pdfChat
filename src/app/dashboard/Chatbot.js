@@ -9,6 +9,8 @@ import { PdfContext } from './context.js'; // 你需要导入你的 Context 对�
 
 export const MyChatbot = () => {
   // const context = useContext(PdfContext);
+  // const [loading, setLoading] = useState(false);
+  // const [response, setResponse] = useState('');
   
 
 

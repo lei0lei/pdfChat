@@ -8,6 +8,10 @@ import { HiOutlineChatBubbleBottomCenterText } from 'react-icons/hi2';
 import { FiSettings } from 'react-icons/fi';
 import { PdfContext } from './context.js';
 import { BiLogOut } from 'react-icons/bi';
+import Link from 'next/link';
+
+
+
 
 const handleLogout = () => {
     // 执行注销操作
@@ -118,11 +122,11 @@ export const Sidebar = () => {
 };
 
 const items = [
-    { title: '主页', Icon: BiHomeSmile, href: '#' },
+    { title: '主页', Icon: BiHomeSmile, href: '/' },
     { title: '关于', Icon: BiUser, href: '#' },
     { title: '联系我们', Icon: HiOutlineChatBubbleBottomCenterText, href: '#' },
     { title: '设置', Icon: FiSettings, href: '#' },
-    { title: '登出', Icon: BiLogOut, href: '#', onClick: handleLogout },
+    { title: '登出', Icon: BiLogOut, href: '/auth/signin', onClick: handleLogout },
   ];
   
   const framerSidebarBackground = {
