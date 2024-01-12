@@ -17,6 +17,7 @@ export class PdfProvider extends React.Component {
       this.updateFileObjs = this.updateFileObjs.bind(this);
       this.updateCurrentShowFile = this.updateCurrentShowFile.bind(this);
       this.updateCurrentShowFileObj = this.updateCurrentShowFileObj.bind(this);
+      this.setCurrentPageNum = this.setCurrentPageNum.bind(this);
       this.updateSeq_id = this.updateSeq_id.bind(this);
       this.updateConversationID = this.updateConversationID.bind(this);
       this.updateSessionID = this.updateSessionID.bind(this);
@@ -37,6 +38,8 @@ export class PdfProvider extends React.Component {
         currentShowFileObj:'',
         updateCurrentShowFile:this.updateCurrentShowFile,
         updateCurrentShowFileObj:this.updateCurrentShowFileObj,
+        currentPageNum:1,
+        setCurrentPageNum:this.setCurrentPageNum,
 
         seq_id:'',
         conversationID:'',
@@ -58,7 +61,7 @@ export class PdfProvider extends React.Component {
     updateCurrentShowFile(file){this.setState({currentShowFile:file})}
     updateCurrentShowFileObj(file){this.setState({currentShowFileObj:file})}
     updateTokens(token){this.setState({tokens:token})}
-
+    setCurrentPageNum(num){this.setState({currentPageNum:num})}
 
     setSocket(newSocket) {
       this.setState({ socket: newSocket });

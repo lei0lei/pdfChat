@@ -17,6 +17,9 @@ export const PdfContext = React.createContext({
   updateCurrentShowFile:()=>{},
   updateCurrentShowFileObj:()=>{},
 
+  currentPageNum:'',
+  setCurrentPageNum:()=>{},
+
   seq_id:'',
   conversationID:'',
   updateSeq_id:()=>{},

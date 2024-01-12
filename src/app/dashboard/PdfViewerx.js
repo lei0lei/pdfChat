@@ -40,13 +40,14 @@ const PdfViewer = () => {
             updateConversationID,
             updateSessionID,
             socket,
+            currentPageNum,
             setSocket } = useContext(PdfContext);
             // console.log(tokens)
             // updateTokens(localStorage.getItem("token"))
-    useEffect(() => {
-        console.log(currentShowFile)
-                // 放置组件需要做的操作，例如 fetch 数据，或者更新状态
-            }, [currentShowFile]);
+    // useEffect(() => {
+    //     console.log(currentShowFile)
+    //             // 放置组件需要做的操作，例如 fetch 数据，或者更新状态
+    //         }, [currentShowFile]);
     // creating new plugin instance
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
@@ -349,12 +350,18 @@ const PdfViewer = () => {
                                         height: '80vh',
                                     }}
                                     >   
+                                        
+                                        
                                         {currentShowFileObj && currentShowFileObj._file&&(
+                                            <div>
+                                            <span>currentPageNum: {currentPageNum}</span>
                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js">
                                             <Viewer fileUrl={currentShowFileObj._file}
+                                                    page={currentPageNum}
                                                     plugins={[defaultLayoutPluginInstance]} 
                                             />
                                         </Worker>
+                                        </div>
                                         )}
 
                                         {!currentShowFileObj._file&&<p>请选择文件</p>}

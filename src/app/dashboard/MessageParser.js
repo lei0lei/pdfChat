@@ -6,14 +6,37 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { PdfContext } from './context.js';
 import { MathJaxContext,MathJax }  from 'better-react-mathjax';
 const MessageParser = ({ children, actions }) => {
+  
   const context = useContext(PdfContext);
   const {
     tokens, 
     seq_id,conversationID,sessionID,
     updateSeq_id,
     socket,
+    currentShowFile,
+    updateCurrentShowFile,
+    updateCurrentShowFileObj,
+    setCurrentPageNum,
+    fileList,
+    fileObjs,
      } = useContext(PdfContext);
-  
+    const handleLinkClick = (fileName,pagenum) => {
+      console.log('clicked');
+      console.log('goto file:')
+      console.log(fileName)
+      console.log('goto page:')
+      console.log(pagenum)
+      updateCurrentShowFile(fileName);
+      let fileObj = fileObjs.find(
+          (item) => item._fileName === fileName
+      );
+
+      updateCurrentShowFileObj(fileObj );
+
+      //页面跳转
+      setCurrentPageNum(pagenum);
+
+    };
   const parse = async (message) => {
     actions.setIsLoading(true);
     if (message.trim() === '') {
@@ -30,10 +53,21 @@ const MessageParser = ({ children, actions }) => {
       // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
       console.log(data.result)
       console.log(data.ref)
-      actions.handleResponse(<MathJax>{data.result.text} </MathJax>);
+      const textResponse = (<React.Fragment>
+          <MathJax>{data.result.text}</MathJax>
+          <a
+              href="#"
+              onClick={() => handleLinkClick(data.ref[0].refFilename, data.ref[0].refPage)}
+              className="text-red-500"
+            >
+            点此查看ref 👉
+          </a>
+          </React.Fragment>)
+      actions.handleResponse(textResponse);
       
-      actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
+      // actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
       socket.off('answer');
+      
       updateSeq_id(seq_id+1);
       actions.setIsLoading(false);
     })}
