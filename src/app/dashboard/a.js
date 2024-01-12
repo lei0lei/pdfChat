@@ -3,7 +3,7 @@ import './PdfViewer.css'
 import { Worker } from '@react-pdf-viewer/core';
 import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { defaultLayoutPlugin,jumpToPage } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import {MyChatbot} from './Chatbot.js'
 import { PdfContext } from './context.js'; 
@@ -15,13 +15,15 @@ import React, { useContext, useEffect } from 'react';
 // import SocketContext from './SocketContext';
 // import { createHash } from 'crypto';
 // import { BlobServiceClient } from '@azure/storage-blob';
-
+import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 
 // 一个函数用于上传文件
 
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
+    const pageNavigationPluginInstance = pageNavigationPlugin();
+    const { jumpToPage } = pageNavigationPluginInstance;
     const [uploadProgress, setUploadProgress] = useState(0);
     const [showProgressBar, setShowProgressBar] = useState(false);
     const [uploading, setUploading] = useState(false);
@@ -40,13 +42,18 @@ const PdfViewer = () => {
             updateConversationID,
             updateSessionID,
             socket,
+            currentPageNum,
             setSocket } = useContext(PdfContext);
             // console.log(tokens)
             // updateTokens(localStorage.getItem("token"))
     useEffect(() => {
-        console.log(currentShowFile)
-                // 放置组件需要做的操作，例如 fetch 数据，或者更新状态
-            }, [currentShowFile]);
+                // 页面变化时，跳转到指定页面
+                jumpToPage(currentPageNum);
+            }, [currentPageNum]);
+    // useEffect(() => {
+    //     console.log(currentShowFile)
+    //             // 放置组件需要做的操作，例如 fetch 数据，或者更新状态
+    //         }, [currentShowFile]);
     // creating new plugin instance
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
@@ -349,12 +356,18 @@ const PdfViewer = () => {
                                         height: '80vh',
                                     }}
                                     >   
+                                        
+                                        
                                         {currentShowFileObj && currentShowFileObj._file&&(
+                                            <div>
+                                            <span>currentPageNum: {currentPageNum}</span>
                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js">
                                             <Viewer fileUrl={currentShowFileObj._file}
-                                                    plugins={[defaultLayoutPluginInstance]} 
+                                                    
+                                                    plugins={[defaultLayoutPluginInstance,pageNavigationPluginInstance]} 
                                             />
                                         </Worker>
+                                        </div>
                                         )}
 
                                         {!currentShowFileObj._file&&<p>请选择文件</p>}
