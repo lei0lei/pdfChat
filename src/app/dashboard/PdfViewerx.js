@@ -48,7 +48,8 @@ const PdfViewer = () => {
             // updateTokens(localStorage.getItem("token"))
             useEffect(() => {
                 // 页面变化时，跳转到指定页面
-                jumpToPage(currentPageNum);
+                if(currentPageNum>0){
+                jumpToPage(currentPageNum-1);}
             }, [currentPageNum]);
     // creating new plugin instance
     const defaultLayoutPluginInstance = defaultLayoutPlugin();

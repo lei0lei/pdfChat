@@ -20,7 +20,9 @@ const MessageParser = ({ children, actions }) => {
     fileList,
     fileObjs,
      } = useContext(PdfContext);
-    const handleLinkClick = (fileName,pagenum) => {
+    const handleLinkClick = (event) => {
+      const fileName = event.target.getAttribute('data-ref-filename');
+      const pagenum = event.target.getAttribute('data-ref-page');
       console.log('clicked');
       console.log('goto file:')
       console.log(fileName)
@@ -57,7 +59,9 @@ const MessageParser = ({ children, actions }) => {
           <MathJax>{data.result.text}</MathJax>
           <a
               href="#"
-              onClick={() => handleLinkClick(data.ref[0].refFilename, data.ref[0].refPage)}
+              onClick={handleLinkClick}
+              data-ref-filename={data.ref[0].refFilename}
+              data-ref-page={data.ref[0].refPage}
               className="text-red-500"
             >
             点此查看ref 👉
