@@ -22,6 +22,7 @@ import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
+    const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
     const pageNavigationPluginInstance = pageNavigationPlugin();
     const { jumpToPage } = pageNavigationPluginInstance;
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -63,7 +64,29 @@ const PdfViewer = () => {
     // handle file onChange event
     const allowedFiles = ['application/pdf'];
     let _sessionID,_conversationID,_seqID;
+    const handleOpenDialog = () => {
+        setShowConfirmationDialog(true);
+      }
+    
+      const handleCloseDialog = () => {
+        setShowConfirmationDialog(false);
+      }
+    
+      const handleConfirmation = (confirmed) => {
+        if (confirmed) {
+          setDisabledInput(false);
+          handleFile();
+        }
+        setShowConfirmationDialog(false);
+      }
+    const handleChange = () => {
+        setShowConfirmationDialog(true);
+      }
+      
+      
+      
     const handleFile = async (e) =>{
+        
         // 重新建立socket连接，每次点击上传都会重新建立socket连接关闭旧的。
         if(localStorage.getItem('token')===null){alert('Please signin.')}
         if (socket) {
@@ -268,6 +291,7 @@ const PdfViewer = () => {
 
     return (
         <>
+            
             <div style={{
                 
                 border: '1px solid black',
@@ -301,6 +325,7 @@ const PdfViewer = () => {
                                 textAlign: 'center',
                             }}
                         >
+                            
                         <input type='file' 
                                 multiple accept='application/pdf'
                                 style={{
@@ -314,10 +339,38 @@ const PdfViewer = () => {
                                     top: 0,
                                     width: '80%',
                                 }}
-                                onChange={handleFile}>
+                                onChange={handleChange}>
                         
                         </input>
-
+                        {showConfirmationDialog && (
+                            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-black p-10 rounded shadow-md w-1/3">
+                                <h2 className="text-2xl font-bold mb-2 text-blue-500">上传文件</h2>
+                                <p className="mt-2 text-lg text-black">确认上传文件吗？</p>
+                                <div className="flex mt-4">
+                                {/* 确认按钮 */}
+                                <button
+                                    className="btn btn-primary mr-2"
+                                    onClick={async () => {
+                                    setShowConfirmationDialog(false);
+                                    await handleFile();
+                                    }}
+                                >
+                                    确认
+                                </button>
+                                {/* 取消按钮 */}
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={() => {
+                                    setShowConfirmationDialog(false);
+                                    }}
+                                >
+                                    取消
+                                </button>
+                                </div>
+                            </div>
+                            </div>
+                        )}
                         {/* we will display error message in case user select some file
                         other than pdf */}
                         {pdfError&&<span className='text-danger'>{pdfError}</span>}
