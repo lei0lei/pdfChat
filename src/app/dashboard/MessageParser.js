@@ -1,4 +1,5 @@
 "use client"; 
+import arrowImage from './click-icon.svg';
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import React, { useContext } from 'react';
 import { BufferMemory } from "langchain/memory";
@@ -40,12 +41,14 @@ const MessageParser = ({ children, actions }) => {
 
     };
   const parse = async (message) => {
+    
     actions.setIsLoading(true);
     if (message.trim() === '') {
       actions.handleResponse('请输入有效消息')
       actions.setIsLoading(false);
       return; // 空消息，不做任何处理
     }
+    actions.handleResponse('')
     socket.emit('onConversation',{message:message,
                                   seq_id:seq_id,
                                   conversationID:conversationID,
@@ -62,9 +65,10 @@ const MessageParser = ({ children, actions }) => {
               onClick={handleLinkClick}
               data-ref-filename={data.ref[0].refFilename}
               data-ref-page={data.ref[0].refPage}
-              className="text-red-500"
+              className="text-red-500 underline"
             >
-            点此查看ref 👉
+              
+            点此查看引用
           </a>
           </React.Fragment>)
       actions.handleResponse(textResponse);
