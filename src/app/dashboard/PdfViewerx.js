@@ -23,6 +23,7 @@ import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 const PdfViewer = () => {
     const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
     const pageNavigationPluginInstance = pageNavigationPlugin();
     const { jumpToPage } = pageNavigationPluginInstance;
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -79,9 +80,13 @@ const PdfViewer = () => {
         }
         setShowConfirmationDialog(false);
       }
-    const handleChange = () => {
+      const handleChange = (e) => {
+        const file = e.target.files[0];
+        console.log('file')
+        console.log(file)
+        setSelectedFile(e);
         setShowConfirmationDialog(true);
-      }
+      };
       
       
       
@@ -160,7 +165,8 @@ const PdfViewer = () => {
         let files_contents = [];
         let files_sha256 = [];
         let fileContents = [];
-        
+        console.log('xxxxxx')
+        console.log(e.target.file)
         for (let selectedFile of e.target.files){
             let finalText = "";
             filesName.push(selectedFile.name)
@@ -353,7 +359,7 @@ const PdfViewer = () => {
                                     className="btn btn-primary mr-2"
                                     onClick={async () => {
                                     setShowConfirmationDialog(false);
-                                    await handleFile();
+                                    await handleFile(selectedFile);
                                     }}
                                 >
                                     确认
