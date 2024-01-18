@@ -24,12 +24,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/le
 const PdfViewer = () => {
     const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [haveSelectedFile, setHaveSelectedFile] = useState(false);
     const pageNavigationPluginInstance = pageNavigationPlugin();
     const { jumpToPage } = pageNavigationPluginInstance;
     const [uploadProgress, setUploadProgress] = useState(0);
     const [showProgressBar, setShowProgressBar] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [blob, setBlob] = useState(null);
+    
     const { //tokens,
         //updateTokens,
             currentShowFile,
@@ -80,18 +82,24 @@ const PdfViewer = () => {
         }
         setShowConfirmationDialog(false);
       }
-      const handleChange = (e) => {
+      const handleChange = async (e) => {
         const file = e.target.files[0];
-        console.log('file')
-        console.log(file)
+        
         setSelectedFile(e);
-        setShowConfirmationDialog(true);
+        
+        if (currentShowFile === '') {
+          setShowConfirmationDialog(false);
+          await handleFile(e);
+        } else {
+          setShowConfirmationDialog(true);
+        }
       };
       
       
       
     const handleFile = async (e) =>{
-        
+        console.log('in handle file')
+        console.log(currentShowFile)
         // 重新建立socket连接，每次点击上传都会重新建立socket连接关闭旧的。
         if(localStorage.getItem('token')===null){alert('Please signin.')}
         if (socket) {

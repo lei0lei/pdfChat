@@ -2,6 +2,9 @@ import config from './ChatbotConfig.js';
 import MessageParser from './MessageParser.js';
 import ActionProvider from './ActionProvider.js';
 import Chatbot from 'react-chatbot-kit'
+import CustomMessageInput from './input.js';
+
+
 
 import './Chatbot.css'
 import React, { useContext } from 'react';
@@ -30,6 +33,7 @@ export const MyChatbot = () => {
         config={config}
         validator={validator}
         headerComponent={CustomHeader}
+        messageInput={<CustomMessageInput />}
         messageParser={MessageParser}
         actionProvider={ActionProvider}
         placeholderText='在此输入问题'
