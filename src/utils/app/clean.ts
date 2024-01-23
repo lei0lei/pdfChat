@@ -11,24 +11,29 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   let updatedConversation = conversation;
 
   // check for model on each conversation
+  // @ts-ignore
   if (!updatedConversation.model) {
     updatedConversation = {
       ...updatedConversation,
+      // @ts-ignore
       model: updatedConversation.model || OpenAIModels[OpenAIModelID.GPT_3_5],
     };
   }
 
   // check for system prompt on each conversation
+  // @ts-ignore
   if (!updatedConversation.prompt) {
     updatedConversation = {
       ...updatedConversation,
+      // @ts-ignore
       prompt: updatedConversation.prompt || DEFAULT_SYSTEM_PROMPT,
     };
   }
-
+// @ts-ignore
   if (!updatedConversation.folderId) {
     updatedConversation = {
       ...updatedConversation,
+      // @ts-ignore
       folderId: updatedConversation.folderId || null,
     };
   }

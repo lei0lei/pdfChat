@@ -245,6 +245,7 @@ export const Sidebar: FC<Props> = ({
                                 const page = await pdf.getPage(i);
 
                                 const textContent = await page.getTextContent();
+                                // @ts-ignore
                                 const strings = textContent.items.map(item => item.str);
 
                                 finalText += strings.join(" ") + "\n";
