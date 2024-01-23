@@ -320,6 +320,7 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
   // EFFECTS ---------------------------------------------
   useEffect(() => {
     if (currentMessage) {
+      // @ts-ignore
       handleSend(currentMessage);
       setCurrentMessage(undefined);
     }
