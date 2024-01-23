@@ -371,6 +371,7 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                   loading={messageIsStreaming}
                   lightMode={lightMode}
                   selectedConversation={selectedConversation}
+                  // @ts-ignore
                   selectedFile={selectedFile}
                   onToggleLightMode={handleLightMode}
                   onNewConversation={handleNewConversation}
