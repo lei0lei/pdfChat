@@ -47,10 +47,12 @@ export const Navbar: FC<Props> = ({
         
         console.log('token')
         console.log(localStorage.getItem("token"))
+        // @ts-ignore
         updateCurrentShowFileObj(e.target.files[0])
         console.log(currentShowFile)
         if (socket) {
             socket.disconnect();
+            // @ts-ignore
             updateSeq_id(0);
           }
           const io = require('socket.io-client');
@@ -63,6 +65,7 @@ export const Navbar: FC<Props> = ({
           console.log('connect')
           console.log(localStorage.getItem("token"))
           newSocket.on('connect', () => {
+            // @ts-ignore
             setSocket(newSocket);
             console.log('WebSocket连接已打开!');
             console.log(newSocket)
@@ -137,6 +140,7 @@ export const Navbar: FC<Props> = ({
                         reader.onloadend=async (e)=>{
                             let CryptoJS = require("crypto-js");
                             let base64 = e.target.result;
+                            // @ts-ignore
                             let base64Content = base64.split(",")[1]; 
                             let wordArray = CryptoJS.enc.Base64.parse(base64Content);
                             let hash = CryptoJS.SHA256(wordArray);
@@ -173,6 +177,7 @@ export const Navbar: FC<Props> = ({
                                             }, 3000);
                                             resolve(uploadResponse);           
                                         }else{
+                                            // @ts-ignore
                                         resolve()
                                         setUploadProgress(100)}
                                         
@@ -180,6 +185,7 @@ export const Navbar: FC<Props> = ({
                             }).then(async () => {
 
                                 files.push({_file:e.target.result,_fileName:selectedFile.name})
+                                // @ts-ignore
                                 const res = await fetch(e.target.result);
                                 const buffer = await res.arrayBuffer();
                                 // console.log(uploadResponse.url)
@@ -203,6 +209,7 @@ export const Navbar: FC<Props> = ({
                                                     fileSha256: hash.toString(CryptoJS.enc.Hex),
                                                     fileType:selectedFile.type});
                                 // Here finalText is the variable which holds the text content of the PDF
+                                // @ts-ignore
                                 resolve();
                             })
                             .catch((error) => {
@@ -234,11 +241,14 @@ export const Navbar: FC<Props> = ({
         //设置当前文件名
         // updateDocs(finalText)
         // updateVectorDatabase(finalText)
+        // @ts-ignore
         updateFileList(filesName);
+        // @ts-ignore
         updateFileObjs(files);
-        
+        // @ts-ignore
         updateCurrentShowFile(filesName[0]);
         //设置当前文件
+        // @ts-ignore
         updateCurrentShowFileObj(files[0]);
 
     }

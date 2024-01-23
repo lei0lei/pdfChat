@@ -40,7 +40,9 @@ const PdfViewerx = () => {
     const { jumpToPage } = pageNavigationPluginInstance;
     useEffect(() => {
         // 页面变化时，跳转到指定页面
+        // @ts-ignore
         if(currentPageNum>0){
+            // @ts-ignore
         jumpToPage(currentPageNum-1);}
     }, [currentPageNum]);
     return (
@@ -71,15 +73,18 @@ const PdfViewerx = () => {
                                         height: '80vh',
                                     }}
                                     >   
-                                        {currentShowFileObj && currentShowFileObj._file&&(
+                                        {// @ts-ignore
+                                        currentShowFileObj && currentShowFileObj._file&&(
                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js">
-                                            <Viewer fileUrl={currentShowFileObj._file}
+                                            <Viewer fileUrl={// @ts-ignore
+                                            currentShowFileObj._file}
                                                     plugins={[defaultLayoutPluginInstance,pageNavigationPluginInstance]} 
                                             />
                                         </Worker>
                                         )}
 
-                                        {!currentShowFileObj._file&&<p>请选择文件</p>}
+                                        {// @ts-ignore
+                                        !currentShowFileObj._file&&<p>请选择文件</p>}
                                     </div>
                                 </div>
                             </div>

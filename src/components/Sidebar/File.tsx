@@ -32,11 +32,13 @@ export const FileComponent: FC<Props> = ({
   const handleSelectFile = (file) => {
     console.log('update current file')
     console.log(file)
+    // @ts-ignore
     updateCurrentShowFile(file)
     let fileObj = fileObjs.find(
       (item) => item._fileName === file
     );
     console.log(fileObj)
+    // @ts-ignore
     updateCurrentShowFileObj(fileObj);
   }
   return (

@@ -2,7 +2,7 @@
 import { Chat } from '../../components/Chat/Chatx';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Navbar } from '../../components/Mobile/Navbar_v1';
-import { Promptbar } from '../../components/Promptbar/Promptbar';
+
 import { ChatBody, Conversation, Message, FileObj } from '../../types/chat';
 import { ErrorMessage } from '../../types/error';
 import { IconArrowBarLeft, IconArrowBarRight } from '@tabler/icons-react';
