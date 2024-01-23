@@ -213,7 +213,7 @@ export const Chat: FC<Props> = memo(
           };
           // actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
           socket.off('answer');
-
+          // @ts-ignore
           updateSeq_id(seq_id+1);
           
           })}
@@ -303,14 +303,16 @@ export const Chat: FC<Props> = memo(
       console.log(fileName)
       console.log('goto page:')
       console.log(pagenum)
+      // @ts-ignore
       updateCurrentShowFile(fileName);
       let fileObj = fileObjs.find(
           (item) => item._fileName === fileName
       );
-
+        // @ts-ignore
       updateCurrentShowFileObj(fileObj );
 
       //页面跳转
+      // @ts-ignore
       setCurrentPageNum(pagenum);
 
     };
