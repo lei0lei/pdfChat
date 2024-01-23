@@ -49,6 +49,8 @@ const MessageParser = ({ children, actions }) => {
       return; // 空消息，不做任何处理
     }
     actions.handleResponse('')
+    console.log('GGGG')
+    console.log(socket)
     socket.emit('onConversation',{message:message,
                                   seq_id:seq_id,
                                   conversationID:conversationID,
