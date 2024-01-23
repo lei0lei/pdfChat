@@ -21,9 +21,12 @@ export class PdfProvider extends React.Component {
       this.updateSeq_id = this.updateSeq_id.bind(this);
       this.updateConversationID = this.updateConversationID.bind(this);
       this.updateSessionID = this.updateSessionID.bind(this);
+      this.updateInitConversation = this.updateInitConversation.bind(this);
       this.setSocket = this.setSocket.bind(this);
       // 将 updateMyString 方法和 myString 存在状态中
       this.state = {
+        initConversation:'',
+        updateInitConversation: this.updateInitConversation,
         vectordb:'',
         docs: '',
         updateDocs: this.updateDocs,
@@ -62,7 +65,7 @@ export class PdfProvider extends React.Component {
     updateCurrentShowFileObj(file){this.setState({currentShowFileObj:file})}
     updateTokens(token){this.setState({tokens:token})}
     setCurrentPageNum(num){this.setState({currentPageNum:num})}
-
+    updateInitConversation(conv){this.setState({initConversation:conv})}
     setSocket(newSocket) {
       this.setState({ socket: newSocket });
   }

@@ -126,6 +126,7 @@ const items = [
     { title: '关于', Icon: BiUser, href: '#' },
     { title: '联系我们', Icon: HiOutlineChatBubbleBottomCenterText, href: '#' },
     { title: '设置', Icon: FiSettings, href: '#' },
+    { title: '新页面', Icon: FiSettings, href: '/V2' },
     { title: '登出', Icon: BiLogOut, href: '/auth/signin', onClick: handleLogout },
   ];
   

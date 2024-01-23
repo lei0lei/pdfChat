@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useState,useContext } from "react"
-import '../../app/globals.css'
+import '../../styles/globals.css'
 import Link from 'next/link';
 import { PdfContext } from '../../app/dashboard/context.js'; 
 export default function Login() {

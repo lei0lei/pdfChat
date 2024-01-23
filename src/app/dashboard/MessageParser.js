@@ -78,7 +78,8 @@ const MessageParser = ({ children, actions }) => {
       
       updateSeq_id(seq_id+1);
       actions.setIsLoading(false);
-    })}
+    })
+  }
     
 
   return (

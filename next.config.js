@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const withImages = require('next-images');
-
+const path = require('path');
 
 
 // module.exports = nextConfig
@@ -14,7 +14,7 @@ module.exports = withImages({
         test: /\.node$/,
         use: 'node-loader',
       });
-
+      // config.resolve.alias['@'] = path.join('../../');
       return config;
     },
 });

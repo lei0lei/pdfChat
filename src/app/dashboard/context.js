@@ -1,6 +1,7 @@
 import React from 'react';
-
 export const PdfContext = React.createContext({
+  initConversation:'',
+  updateInitConversation: ()=>{},
   vectordb: '',
   docs: '--------',
   updateDocs: () => {},

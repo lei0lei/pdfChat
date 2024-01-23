@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import React from 'react';
-import './globals.css';
+import '../styles/globals.css';
 import cursorUrl from './custom-cursor.svg';
 
 export default function HomePage() {
