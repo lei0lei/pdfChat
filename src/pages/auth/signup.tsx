@@ -1,4 +1,4 @@
-import '../../globals.css'
+import '../../styles/globals.css'
 import { useRouter } from "next/router"
 import { useState } from "react"
 import Link from 'next/link';

@@ -201,20 +201,6 @@ export const Chat: FC<Props> = memo(
           console.log(data.ref)
           const textResponse = data.result.text
           console.log('3')
-          // const textResponse = (<React.Fragment>
-          // <MathJax>{data.result.text}</MathJax>
-          // <a
-          // href="#"
-          // onClick={handleLinkClick}
-          // data-ref-filename={data.ref[0].refFilename}
-          // data-ref-page={data.ref[0].refPage}
-          // className="text-red-500 underline"
-          // >
-
-          // 点此查看引用
-          // </a>
-          // </React.Fragment>)
-          // actions.handleResponse(textResponse);
           const updatedMessages: Message[] = [
             ...updatedConversation.messages,
             { role: 'assistant', content: textResponse },
