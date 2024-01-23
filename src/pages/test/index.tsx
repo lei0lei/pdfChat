@@ -373,7 +373,6 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                   selectedFile={selectedFile}
                   onToggleLightMode={handleLightMode}
                   onNewConversation={handleNewConversation}
-                  onNewConversation={handleNewConversation}
                 />
 
                 <button
