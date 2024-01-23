@@ -1,8 +1,13 @@
 {
   "extends": "next/core-web-vitals",
-  "rules": {
-    "@next/next/no-document-import-in-page": "off",
+  "overrides": [
+    {
+      "files": ["*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@next/next/no-document-import-in-page": "off",
     "@typescript-eslint/no-invalid-void-type": "off"
-},
-"files": ["*.tsx"]
+      }
+    }
+  ]
 }
