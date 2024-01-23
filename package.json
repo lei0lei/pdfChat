@@ -21,7 +21,7 @@
     "eventsource-parser": "^0.1.0",
     "http-proxy-middleware": "^2.0.6",
     "i18next": "^22.5.1",
-    "next": "^14.0.4",
+    "next": "^13.4.19",
     "next-i18next": "^13.3.0",
     "next-images": "^1.8.5",
     "openai": "^3.2.1",
