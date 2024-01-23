@@ -56,9 +56,9 @@ export const ChatInput: FC<Props> = ({
 
   // const promptListRef = useRef<HTMLUListElement | null>(null);
 
-  // const filteredPrompts = prompts.filter((prompt) =>
-  //   prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
-  // );
+  const filteredPrompts = prompts.filter((prompt) =>
+    prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
+  );
   // 处理文本框（textarea）内容变化的事件，更新状态和界面。
 
 
