@@ -22,7 +22,7 @@ export const Files: FC<Props> = ({
         .map((file, index) => (
           <FileComponent
             key={index}
-            selectedFile={selectedFile}
+
             file={file}
             loading={loading}
           />
