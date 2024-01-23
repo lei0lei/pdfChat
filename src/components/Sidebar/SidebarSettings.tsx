@@ -47,6 +47,7 @@ export const SidebarSettings: FC<Props> = ({
         icon={
           <IconHome size={18} />
         }
+        // @ts-ignore
         onClick={gotoMain}
       />
     <SidebarButton
