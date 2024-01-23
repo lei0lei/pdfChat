@@ -188,13 +188,13 @@ export const Chat: FC<Props> = memo(
           console.log('1')
           console.log(message)
           console.log(socket)
-          socket.emit('onConversation',{message:message,
+          socket?.emit('onConversation',{message:message,
             seq_id:seq_id,
             conversationID:conversationID,
             sessionID:sessionID})
           console.log('sss')
           
-          socket.on('answer',(data) => {
+          socket?.on('answer',(data) => {
           console.log('2')
           // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
           console.log(data.result)
@@ -210,7 +210,7 @@ export const Chat: FC<Props> = memo(
             messages: updatedMessages,
           };
           // actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
-          socket.off('answer');
+          socket?.off('answer');
 
           updateSeq_id(seq_id+1);
           
