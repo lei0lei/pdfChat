@@ -86,8 +86,11 @@ export const Navbar: FC<Props> = ({
           console.log('You have got session id from server:')
           console.log(_sessionID);
           console.log(_conversationID);
+          // @ts-ignore
           updateSessionID(_sessionID)
+          // @ts-ignore
           updateConversationID(_conversationID)
+          // @ts-ignore
           updateSeq_id(_seqID)
         });
         // 多文件上传
@@ -198,6 +201,7 @@ export const Navbar: FC<Props> = ({
                                     const page = await pdf.getPage(i);
 
                                     const textContent = await page.getTextContent();
+                                    // @ts-ignore
                                     const strings = textContent.items.map(item => item.str);
 
                                     finalText += strings.join(" ") + "\n";
