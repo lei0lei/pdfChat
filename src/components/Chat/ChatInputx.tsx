@@ -204,9 +204,9 @@ export const ChatInput: FC<Props> = ({
     // 最后，函数返回foundVariables，此时这个数组已经包含了content字符串中所有匹配到的变量。
     let match;
 
-    while ((match = regex.exec(content)) !== null) {
-      foundVariables.push(match[1]);
-    }
+    // while ((match = regex.exec(content)) !== null) {
+    //   foundVariables.push(match[1]);
+    // }
 
     return foundVariables;
   };
