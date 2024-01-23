@@ -96,6 +96,7 @@ export const Sidebar: FC<Props> = ({
     console.log(currentShowFile)
     if (socket) {
         socket.disconnect();
+        // @ts-ignore
         updateSeq_id(0);
       }
       const io = require('socket.io-client');
