@@ -2,12 +2,13 @@ import { Message } from '../../types/chat';
 import { IconCheck, IconCopy, IconEdit, IconUser, IconRobot } from '@tabler/icons-react';
 import { useTranslation } from 'next-i18next';
 import { FC, memo, useEffect, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import rehypeMathjax from 'rehype-mathjax';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import { CodeBlock } from '../Markdown/CodeBlock';
 import { MemoizedReactMarkdown } from '../Markdown/MemoizedReactMarkdown';
-
+import { PdfContext } from '../../app/dashboard/context.js';
 interface Props {
   message: Message;
   messageIndex: number;
@@ -16,6 +17,19 @@ interface Props {
 
 export const ChatMessage: FC<Props> = memo(
   ({ message, messageIndex, onEditMessage }) => {
+    const context = useContext(PdfContext);
+  const {
+    tokens, 
+    seq_id,conversationID,sessionID,
+    updateSeq_id,
+    socket,
+    currentShowFile,
+    updateCurrentShowFile,
+    updateCurrentShowFileObj,
+    setCurrentPageNum,
+    fileList,
+    fileObjs,
+     } = useContext(PdfContext);
     const { t } = useTranslation('chat');
     // 追踪用户是否正在编辑消息；
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -25,6 +39,27 @@ export const ChatMessage: FC<Props> = memo(
     const [messagedCopied, setMessageCopied] = useState(false);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const handleLinkClick = (event) => {
+      const fileName = event.target.getAttribute('data-ref-filename');
+      const pagenum = event.target.getAttribute('data-ref-page');
+      console.log('clicked');
+      console.log('goto file:')
+      console.log(fileName)
+      console.log('goto page:')
+      console.log(pagenum)
+      // @ts-ignore
+      updateCurrentShowFile(fileName);
+      let fileObj = fileObjs.find(
+          (item) => item._fileName === fileName
+      );
+        // @ts-ignore
+      updateCurrentShowFileObj(fileObj );
+
+      //页面跳转
+      // @ts-ignore
+      setCurrentPageNum(pagenum);
+
+    };
     // 改变isEditing状态，从而切换编辑模式和浏览模式
     const toggleEditing = () => {
       setIsEditing(!isEditing);
@@ -108,7 +143,8 @@ export const ChatMessage: FC<Props> = memo(
                         overflow: 'hidden',
                       }}
                     />
-
+                    {/* ref */}
+                    
                     <div className="mt-10 flex justify-center space-x-4">
                       <button
                         className="h-[40px] rounded-md bg-blue-500 px-4 py-1 text-sm font-medium text-white enabled:hover:bg-blue-600 disabled:opacity-50"
@@ -217,7 +253,18 @@ export const ChatMessage: FC<Props> = memo(
                   }}
                 >
                   {message.content}
+                  
                 </MemoizedReactMarkdown>
+                <a
+                      href="#"
+                      onClick={handleLinkClick}
+                      data-ref-filename={message.data_ref_filename}
+                      data-ref-page={message.data_ref_page}
+                      className="text-red-500 underline"
+                    >
+                      
+                    点此查看引用
+                  </a>
               </>
             )}
           </div>

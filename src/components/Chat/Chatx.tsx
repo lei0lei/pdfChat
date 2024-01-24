@@ -202,10 +202,12 @@ export const Chat: FC<Props> = memo(
           console.log(data.result)
           console.log(data.ref)
           const textResponse = data.result.text
+
           console.log('3')
           const updatedMessages: Message[] = [
             ...updatedConversation.messages,
-            { role: 'assistant', content: textResponse },
+            { role: 'assistant', content: textResponse ,data_ref_filename:data.ref[0].refFilename,
+            data_ref_page:data.ref[0].refPage},
           ];
           updatedConversation = {
             ...updatedConversation,
@@ -267,7 +269,7 @@ export const Chat: FC<Props> = memo(
           const  answer = 'xx';
           const updatedMessages: Message[] = [
             ...updatedConversation.messages,
-            { role: 'assistant', content: answer },
+            { role: 'assistant', content: answer ,data_ref_filename:'',data_ref_page:''},
           ];
   
           updatedConversation = {
