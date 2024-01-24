@@ -189,7 +189,7 @@ export const Chat: FC<Props> = memo(
           console.log(message)
           console.log(socket)
           if (socket !== null) {
-          socket.emit('onConversation',{message:message,
+          socket.emit('onConversation',{message:message['content'],
             seq_id:seq_id,
             conversationID:conversationID,
             sessionID:sessionID})
@@ -211,15 +211,6 @@ export const Chat: FC<Props> = memo(
             ...updatedConversation,
             messages: updatedMessages,
           };
-          // actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
-          socket.off('answer');
-          // @ts-ignore
-          updateSeq_id(seq_id+1);
-          
-          })}
-          setLoading(false);
-          // 消息渲染
-    
           setSelectedConversation(updatedConversation);
   
           saveConversation(updatedConversation);
@@ -242,6 +233,36 @@ export const Chat: FC<Props> = memo(
           saveConversations(updatedConversations);
   
           setMessageIsStreaming(false);
+          // actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
+          socket.off('answer');
+          // @ts-ignore
+          updateSeq_id(seq_id+1);
+          
+          })}
+          // setLoading(false);
+          // // 消息渲染
+          // setSelectedConversation(updatedConversation);
+  
+          // saveConversation(updatedConversation);
+  
+          // const updatedConversations: Conversation[] = conversations.map(
+          //   (conversation) => {
+          //     if (conversation.id === conversation.id) {
+          //       return updatedConversation;
+          //     }
+  
+          //     return conversation;
+          //   },
+          // );
+  
+          // if (updatedConversations.length === 0) {
+          //   updatedConversations.push(updatedConversation);
+          // }
+  
+          // setConversations(updatedConversations);
+          // saveConversations(updatedConversations);
+  
+          // setMessageIsStreaming(false);
         } else {
           const  answer = 'xx';
           const updatedMessages: Message[] = [

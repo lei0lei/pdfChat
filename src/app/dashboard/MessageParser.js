@@ -51,6 +51,8 @@ const MessageParser = ({ children, actions }) => {
     actions.handleResponse('')
     console.log('GGGG')
     console.log(socket)
+    console.log('mp')
+    console.log(message)
     socket.emit('onConversation',{message:message,
                                   seq_id:seq_id,
                                   conversationID:conversationID,

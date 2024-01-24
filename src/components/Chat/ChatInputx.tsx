@@ -301,7 +301,7 @@ export const ChatInput: FC<Props> = ({
             className="absolute top-0 left-0 right-0 mx-auto mb-3 flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600 dark:bg-[#343541] dark:text-white md:mb-0 md:mt-2"
             // onClick={onRegenerate}
           >
-            <IconRepeat size={16} /> {t('Regenerate response')}
+            <IconRepeat size={16} /> {('重新生成')}
           </button>
         )}
 
@@ -344,7 +344,7 @@ export const ChatInput: FC<Props> = ({
               }`,
             }}
             placeholder={
-              t('Type a message or type "/" to select a prompt...') || ''
+              t('请输入消息...') || ''
             }
             value={content}
             rows={1}
