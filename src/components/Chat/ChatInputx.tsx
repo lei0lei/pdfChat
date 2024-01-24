@@ -99,6 +99,7 @@ export const ChatInput: FC<Props> = ({
       return;
     }
     // 如果上述情况都未发生，则调用onSend函数，并传递一个对象，对象中包含role（在此情况下永远是'user'）和content（ 文本框中的内容）。另外，函数还传递了plugin参数，这可能是一种特殊插件或者配置，具体需要看onSend函数的实现。
+    // @ts-ignore
     onSend({ role: 'user', content }, plugin);
     // 函数会调用setContent('')和setPlugin(null)。这两个都是React的useState更新函数，分别用来清空文本框内容和清除任何可能存在的插件。
     setContent('');
