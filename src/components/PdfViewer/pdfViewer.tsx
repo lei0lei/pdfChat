@@ -70,7 +70,7 @@ const PdfViewerx = () => {
                                     style={{
                                         flex: 1,
                                         overflow: 'hidden',
-                                        height: '80vh',
+                                        height: '100vh',
                                     }}
                                     >   
                                         {// @ts-ignore

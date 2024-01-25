@@ -208,6 +208,7 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
             <PdfProvider>
             {showSidebar ? (
               <div>
+                
                 <Sidebar
                   loading={messageIsStreaming}
                   lightMode={lightMode}
@@ -246,7 +247,7 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                     border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '90vh',
+                    height: '100vh',
                     width: '100%',
                   }}
                 >
@@ -280,10 +281,6 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
               
             </div>
             
-            {/* ):( */}
-            {/* )} */}
-          {/* </div> */}
-            {/* )} */}
             </PdfProvider>
             {/* promptbar */}
             </div>
