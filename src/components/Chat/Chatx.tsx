@@ -239,7 +239,7 @@ export const Chat: FC<Props> = memo(
           socket.off('answer');
           // @ts-ignore
           updateSeq_id(seq_id+1);
-          
+          setLoading(false);
           })}
           // setLoading(false);
           // // 消息渲染
@@ -507,4 +507,5 @@ export const Chat: FC<Props> = memo(
     );
   },
 );
+
 Chat.displayName = 'Chat';

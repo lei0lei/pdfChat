@@ -47,165 +47,6 @@ const Home: React.FC<HomeProps> = ({
     console.log('new file')
   };
 
-  // const handleSend = async (
-  //   message: Message,
-  //   deleteCount = 0,
-  //   plugin: Plugin | null = null,
-  // ) => {
-  //   console.log('handle send')
-  //   console.log(message)
-  //   // message: Message 对象，表示一个消息，它应有一些内容（content）和角色（role）负责发送消息。
-  //   // deleteCount（可选，默认为0）: 表示需要从会话中删除的消息数量。
-  //   // plugin（可选，默认为null）: 插件对象，可能包含某些使用Google搜索的插件信息。
-  //   if (selectedConversation) {
-  //     let updatedConversation: Conversation;
-  //     // 会话更新: 如果 deleteCount 大于0，则会从 selectedConversation对象中删除指定数量的消息。然后将 message 插入到消息列表中。
-  //     if (deleteCount) {
-  //       // 删除消息
-  //       const updatedMessages = [...selectedConversation.messages];
-  //       for (let i = 0; i < deleteCount; i++) {
-  //         updatedMessages.pop();
-  //       }
-  //       // 将message插入到消息列表的末尾
-  //       updatedConversation = {
-  //         ...selectedConversation,
-  //         messages: [...updatedMessages, message],
-  //       };
-  //     } else {
-  //       updatedConversation = {
-  //         ...selectedConversation,
-  //         messages: [...selectedConversation.messages, message],
-  //       };
-  //     }
-  //     // setSelectedConversation用于更新选定的会话对象。
-  //     setSelectedConversation(updatedConversation);
-  //     setLoading(true);
-  //     setMessageIsStreaming(true);
-
-  //     // 根据updatedConversation.messages创建一个ChatBody对象，并将其转化为JSON字符串赋值给body变量。
-  //     const chatBody: ChatBody = {
-  //       messages: updatedConversation.messages,
-  //     };
-
-  //     // const endpoint = getEndpoint(plugin);
-  //     let body;
-      
-  //     if (!plugin) {
-  //       body = JSON.stringify(chatBody);
-  //     } else {
-  //       // body = JSON.stringify({
-  //       //   ...chatBody,
-  //       //   googleAPIKey: pluginKeys
-  //       //     .find((key) => key.pluginId === 'google-search')
-  //       //     ?.requiredKeys.find((key) => key.key === 'GOOGLE_API_KEY')?.value,
-  //       //   googleCSEId: pluginKeys
-  //       //     .find((key) => key.pluginId === 'google-search')
-  //       //     ?.requiredKeys.find((key) => key.key === 'GOOGLE_CSE_ID')?.value,
-  //       // });
-  //     }
-
-  //     const controller = new AbortController();
-
-  //     const data = 'hh';
-
-  //     if (!data) {
-  //       setLoading(false);
-  //       setMessageIsStreaming(false);
-  //       return;
-  //     }
-      
-  //     if (!plugin) {
-  //       if (updatedConversation.messages.length === 1) {
-  //         const { content } = message;
-  //         const customName =
-  //           content.length > 30 ? content.substring(0, 30) + '...' : content;
-
-  //         updatedConversation = {
-  //           ...updatedConversation,
-  //           name: customName,
-  //         };
-  //       }
-
-  //       setLoading(false);
-
-  //       // const reader = data.getReader();
-  //       // const decoder = new TextDecoder();
-  //       let done = false;
-  //       let isFirst = true;
-  //       let text = '';
-  //       // 消息处理逻辑
-
-
-  //       // 消息渲染
-  //       const updatedMessages: Message[] = [
-  //               ...updatedConversation.messages,
-  //               { role: 'assistant', content: 'pp' },
-  //             ];
-  
-  //       updatedConversation = {
-  //               ...updatedConversation,
-  //               messages: updatedMessages,
-  //             };
-  
-  //       setSelectedConversation(updatedConversation);
-
-  //       saveConversation(updatedConversation);
-
-  //       const updatedConversations: Conversation[] = conversations.map(
-  //         (conversation) => {
-  //           if (conversation.id === selectedConversation.id) {
-  //             return updatedConversation;
-  //           }
-
-  //           return conversation;
-  //         },
-  //       );
-
-  //       if (updatedConversations.length === 0) {
-  //         updatedConversations.push(updatedConversation);
-  //       }
-
-  //       setConversations(updatedConversations);
-  //       saveConversations(updatedConversations);
-
-  //       setMessageIsStreaming(false);
-  //     } else {
-  //       const  answer = 'xx';
-  //       const updatedMessages: Message[] = [
-  //         ...updatedConversation.messages,
-  //         { role: 'assistant', content: answer },
-  //       ];
-
-  //       updatedConversation = {
-  //         ...updatedConversation,
-  //         messages: updatedMessages,
-  //       };
-
-  //       setSelectedConversation(updatedConversation);
-  //       saveConversation(updatedConversation);
-
-  //       const updatedConversations: Conversation[] = conversations.map(
-  //         (conversation) => {
-  //           if (conversation.id === selectedConversation.id) {
-  //             return updatedConversation;
-  //           }
-
-  //           return conversation;
-  //         },
-  //       );
-
-  //       if (updatedConversations.length === 0) {
-  //         updatedConversations.push(updatedConversation);
-  //       }
-
-  //       setConversations(updatedConversations);
-  //       saveConversations(updatedConversations);
-
-  //       setLoading(false);
-  //       setMessageIsStreaming(false);
-  //     }
-  //   }
-  // };
 
 const handleDeleteConversation = (conversation: Conversation) => {
     const updatedConversations = conversations.filter(
@@ -351,7 +192,7 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        
+        {selectedConversation && (
         <main
           className={`flex h-screen w-screen flex-col text-sm text-white dark:text-white ${lightMode}`}
         >
@@ -396,9 +237,9 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                 <IconArrowBarRight />
               </button>
             )}
-            {selectedConversation && (
-            <div className="flex flex-grow justify-center items-center">
-              <div className="w-1/2">
+            {/* {selectedConversation && ( */}
+            {/* <div className="flex"> */}
+            <div className="flex flex-1">
                 <div
                   className="rpv-core__viewer"
                   style={{
@@ -414,9 +255,9 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                 </div>
               </div>
 
-            {/* <div className="flex flex-1"> */}
+            <div className="flex flex-1">
             {/* {selectedConversation ? ( */}
-              <div className="relative h-full overflow-hidden bg-white dark:bg-[#343541]">
+              {/* <div className="relative h-full overflow-hidden bg-white dark:bg-[#343541]"> */}
               {/* <div className="h-full"> */}
                 {/* Chat Component Code */}
                 <Chat
@@ -441,15 +282,13 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
             
             {/* ):( */}
             {/* )} */}
-          </div>
-            )}
+          {/* </div> */}
+            {/* )} */}
             </PdfProvider>
             {/* promptbar */}
-
-            
             </div>
         </main>
-        
+        )}
     </>
   )};
 

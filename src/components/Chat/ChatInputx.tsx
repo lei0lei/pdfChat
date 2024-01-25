@@ -359,8 +359,8 @@ export const ChatInput: FC<Props> = ({
             className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
             onClick={handleSend}
           >
-            {/* {messageIsStreaming ? ( */}
-            {false?(
+            {messageIsStreaming ? (
+            // {false?(
               <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60 dark:border-neutral-100"></div>
             ) : (
               <IconSend size={18} />
@@ -379,14 +379,14 @@ export const ChatInput: FC<Props> = ({
             </div>
           )} */}
           {/* 接着，如果 isModalVisible 为真，则渲染一个 VariableModal 组件。这个组件可能用于展示或修改一些变量或配置的信息。 */}
-          {/* {isModalVisible && (
+          {isModalVisible && (
             <VariableModal
               prompt={prompts[activePromptIndex]}
               variables={variables}
               onSubmit={handleSubmit}
               onClose={() => setIsModalVisible(false)}
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>
