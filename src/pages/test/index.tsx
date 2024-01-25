@@ -244,7 +244,7 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                 <div
                   className="rpv-core__viewer"
                   style={{
-                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    // border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100vh',
@@ -252,7 +252,8 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
                   }}
                 >
                   {/* PDF Viewer Code */}
-                  <PdfViewerx />
+                  <PdfViewerx
+                  lightMode={lightMode} />
                 </div>
               </div>
 

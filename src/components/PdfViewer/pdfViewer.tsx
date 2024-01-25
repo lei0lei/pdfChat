@@ -15,10 +15,12 @@ import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
 interface Props {
-
+    lightMode,
 }
 
-const PdfViewerx = () => {
+const PdfViewerx = (
+    lightMode,
+) => {
     const { //tokens,
         //updateTokens,
             currentShowFile,
@@ -45,6 +47,7 @@ const PdfViewerx = () => {
             // @ts-ignore
         jumpToPage(currentPageNum-1);}
     }, [currentPageNum]);
+
     return (
         <div
                                     className="rpv-core__viewer"
@@ -76,7 +79,9 @@ const PdfViewerx = () => {
                                         {// @ts-ignore
                                         currentShowFileObj && currentShowFileObj._file&&(
                                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js">
-                                            <Viewer fileUrl={// @ts-ignore
+                                            <Viewer theme={lightMode['lightMode']} 
+                                            fileUrl={
+                                                // @ts-ignore
                                             currentShowFileObj._file}
                                                     plugins={[defaultLayoutPluginInstance,pageNavigationPluginInstance]} 
                                             />
