@@ -89,7 +89,7 @@ const PdfViewerx = (
                                         )}
 
                                         {// @ts-ignore
-                                        !currentShowFileObj._file&&<p>请选择文件</p>}
+                                        !currentShowFileObj._file&&(<div><p>请选择文件</p></div>)}
                                     </div>
                                 </div>
                             </div>
