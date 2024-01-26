@@ -205,86 +205,101 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
             </div>
             <div className="flex h-full w-full pt-[48px] sm:pt-0">
             {/* chatbar */}
-            <PdfProvider>
-            {showSidebar ? (
-              <div>
-                
-                <Sidebar
-                  loading={messageIsStreaming}
-                  lightMode={lightMode}
-                  selectedConversation={selectedConversation}
-                  // @ts-ignore
-                  selectedFile={selectedFile}
-                  onToggleLightMode={handleLightMode}
-                  onNewConversation={handleNewConversation}
-                />
+              <PdfProvider>
+              {showSidebar ? (
+                <div>
+                  
+                  <Sidebar
+                    loading={messageIsStreaming}
+                    lightMode={lightMode}
+                    selectedConversation={selectedConversation}
+                    // @ts-ignore
+                    selectedFile={selectedFile}
+                    onToggleLightMode={handleLightMode}
+                    onNewConversation={handleNewConversation}
+                  />
 
-                <button
-                  className="fixed top-5 left-[270px] z-50 h-7 w-7 hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:left-[270px] sm:h-8 sm:w-8 sm:text-neutral-700"
-                  onClick={handleToggleChatbar}
-                >
-                  <IconArrowBarLeft />
-                </button>
-                <div
-                  onClick={handleToggleChatbar}
-                  className="absolute top-0 left-0 z-10 h-full w-full bg-black opacity-70 sm:hidden"
-                ></div>
-              </div>
-            ) : (
-              <button
-                className="fixed top-2.5 left-4 z-50 h-7 w-7 text-white hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:left-4 sm:h-8 sm:w-8 sm:text-neutral-700"
-                onClick={handleToggleChatbar}
-              >
-                <IconArrowBarRight />
-              </button>
-            )}
-            {/* {selectedConversation && ( */}
-            {/* <div className="flex"> */}
-            <div className="flex flex-1">
-                <div
-                  className="rpv-core__viewer"
-                  style={{
-                    // border: '1px solid rgba(0, 0, 0, 0.3)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100vh',
-                    width: '100%',
-                  }}
-                >
-                  {/* PDF Viewer Code */}
-                  <PdfViewerx
-                  lightMode={lightMode} />
+                  <button
+                    className="fixed top-5 left-[270px] z-50 h-7 w-7 hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:left-[270px] sm:h-8 sm:w-8 sm:text-neutral-700"
+                    onClick={handleToggleChatbar}
+                  >
+                    <IconArrowBarLeft />
+                  </button>
+                  <div
+                    onClick={handleToggleChatbar}
+                    className="absolute top-0 left-0 z-10 h-full w-full bg-black opacity-70 sm:hidden"
+                  ></div>
                 </div>
-              </div>
+              ) : (
+                <button
+                  className="fixed top-2.5 left-4 z-50 h-7 w-7 text-white hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:left-4 sm:h-8 sm:w-8 sm:text-neutral-700"
+                  onClick={handleToggleChatbar}
+                >
+                  <IconArrowBarRight />
+                </button>
+              )}
+              {/* {selectedConversation && ( */}
+              {/* <div className="flex"> */}
+              <div className="flex h-full w-full pt-[48px] sm:pt-0">  
+                <div className="flex flex-1 flex-col m-4  bg-white dark:bg-[#1f202b]">
+                <div className="info-bar flex items-center justify-center">
+  <div className="text-center">Info bar 1</div>
+</div>
+                
+                <div className="flex flex-1 "
+                style={{
+                  
+                  height: '90vh',
+                  
+                }}>  
+                    {/* <div
+                      className="rpv-core__viewer h-full"
+                      style={{
+                        // border: '1px solid rgba(0, 0, 0, 0.3)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        // height: '50vh',
+                        width: '50%',
+                      }}
+                    > */}
+                      {/* PDF Viewer Code */}
+                      <PdfViewerx
+                      lightMode={lightMode} />
+                    {/* </div> */}
+               
 
-            <div className="flex flex-1">
-            {/* {selectedConversation ? ( */}
-              {/* <div className="relative h-full overflow-hidden bg-white dark:bg-[#343541]"> */}
-              {/* <div className="h-full"> */}
-                {/* Chat Component Code */}
-                <Chat
-                conversation={selectedConversation}
-                conversations={conversations}
-                messageIsStreaming={messageIsStreaming}
-                loading={loading}
-                prompts={prompts}
-                setLoading={setLoading}
-                setSelectedConversation={setSelectedConversation}
-                setMessageIsStreaming={setMessageIsStreaming}
-                saveConversation={saveConversation}
-                setConversations={setConversations}
-                saveConversations={saveConversations}
-                //onSend={handleSend}
-                onUpdateConversation={handleUpdateConversation}
-                onEditMessage={handleEditMessage}
-                stopConversationRef={stopConversationRef}
-              />
+                <div className="flex flex-1">
+                  
+                      <Chat
+                      conversation={selectedConversation}
+                      conversations={conversations}
+                      messageIsStreaming={messageIsStreaming}
+                      loading={loading}
+                      prompts={prompts}
+                      setLoading={setLoading}
+                      setSelectedConversation={setSelectedConversation}
+                      setMessageIsStreaming={setMessageIsStreaming}
+                      saveConversation={saveConversation}
+                      setConversations={setConversations}
+                      saveConversations={saveConversations}
+                      //onSend={handleSend}
+                      onUpdateConversation={handleUpdateConversation}
+                      onEditMessage={handleEditMessage}
+                      stopConversationRef={stopConversationRef}
+                    />
+                    
+                </div>
               
+              </div>
+              {/* <div className="info-bar">Info bar 2</div> */}
+              <div className="info-bar flex items-center justify-center">
+  <div className="text-center">Info bar 2</div>
+</div> 
+              </div>
+              </div>
+              </PdfProvider>
             </div>
             
-            </PdfProvider>
-            {/* promptbar */}
-            </div>
         </main>
         )}
     </>

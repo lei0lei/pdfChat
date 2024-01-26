@@ -49,13 +49,14 @@ const PdfViewerx = (
     }, [currentPageNum]);
 
     return (
+        <div className="relative flex-1 overflow-hidden bg-white dark:bg-[#343541]">
         <div
                                     className="rpv-core__viewer"
                                     style={{
-                                        border: '1px solid rgba(0, 0, 0, 0.3)',
+                                        // border: '1px solid rgba(0, 0, 0, 0.3)',
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        height: '100vh',
+                                        height: '90%',
                                         width: '100%',
                                         
                                     }}
@@ -92,6 +93,7 @@ const PdfViewerx = (
                                         !currentShowFileObj._file&&(<div><p>请选择文件</p></div>)}
                                     </div>
                                 </div>
+                            </div>
                             </div>
     );
 };
