@@ -34,7 +34,7 @@ export default function Login() {
         localStorage.setItem("token", json.token)
         console.log(json)
         // updateTokens(json.token)
-        router.push("/dashboard")
+        router.push("/test")
       } else {
         alert("用户名或密码错误")
       }

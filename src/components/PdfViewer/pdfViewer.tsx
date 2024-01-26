@@ -9,8 +9,9 @@ import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import * as pdfjsLib from 'pdfjs-dist';
-
+import { DocumentAddIcon, DocumentIcon } from '@heroicons/react/solid' 
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
+import { HiDocumentChartBar } from 'react-icons/hi2';
 
 
 pdfjsLib.GlobalWorkerOptions.workerSrc= "https://unpkg.com/pdfjs-dist@3.4.120/legacy/build/pdf.worker.js";
@@ -75,6 +76,9 @@ const PdfViewerx = (
                                         flex: 1,
                                         overflow: 'hidden',
                                         height: '100vh',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
                                     }}
                                     >   
                                         {// @ts-ignore
@@ -90,7 +94,10 @@ const PdfViewerx = (
                                         )}
 
                                         {// @ts-ignore
-                                        !currentShowFileObj._file&&(<div><p>请选择文件</p></div>)}
+                                        !currentShowFileObj._file&&(<div className="flex flex-col items-center justify-center space-y-4 bg-white shadow-md rounded-md p-6">
+                                        <DocumentIcon className="w-24 h-24 text-blue-500" />  // 使用图标组件
+                                        <p className="text-lg font-medium text-gray-700">未选择文件</p>
+                                      </div>)}
                                     </div>
                                 </div>
                             </div>
