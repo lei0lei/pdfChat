@@ -242,8 +242,8 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
               {/* <div className="flex"> */}
               <div className="flex h-full w-full pt-[48px] sm:pt-0">  
                 <div className="flex flex-1 flex-col m-4  bg-white dark:bg-[#1f202b]">
-                <div className="info-bar flex items-center justify-center">
-  <div className="text-center text-blue-500">Info bar 1</div>
+                <div className="info-bar flex items-center justify-center bg-gray-500">
+  <div className="text-center text-white">Info bar 1</div>
 </div>
                 
                 <div className="flex flex-1 "
@@ -292,8 +292,8 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
               
               </div>
               {/* <div className="info-bar">Info bar 2</div> */}
-              <div className="info-bar flex items-center justify-center">
-  <div className="text-center text-blue-500">Info bar 2</div>
+              <div className="info-bar flex items-center justify-center bg-gray-500">
+  <div className="text-center text-white">Info bar 2</div>
 </div> 
               </div>
               </div>
