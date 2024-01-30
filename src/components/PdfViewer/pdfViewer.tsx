@@ -97,6 +97,7 @@ const PdfViewerx = (
                                         !currentShowFileObj._file&&(<div className="flex flex-col items-center justify-center space-y-4 bg-white shadow-md rounded-md p-6">
                                         <DocumentIcon className="w-24 h-24 text-blue-500" />
                                         <p className="text-lg font-medium text-gray-700">未选择文件</p>
+                                        <p className="text-lg font-medium text-gray-700">(单文件不超过5MB)</p>
                                       </div>)}
                                     </div>
                                 </div>
