@@ -100,7 +100,8 @@ export const Sidebar: FC<Props> = ({
         updateSeq_id(0);
       }
       const io = require('socket.io-client');
-      const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
+      // const newSocket = io('wss://pdfchat-server.azurewebsites.net/ws',{
+        const newSocket = io('localhost:8080/ws',{
           extraHeaders: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           },    

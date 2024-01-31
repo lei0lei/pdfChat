@@ -255,7 +255,8 @@ export const ChatMessage: FC<Props> = memo(
                   {message.content}
                   
                 </MemoizedReactMarkdown>
-                <a
+                
+                {message.data_ref_filename&&(<a
                       href="#"
                       onClick={handleLinkClick}
                       data-ref-filename={message.data_ref_filename}
@@ -264,7 +265,7 @@ export const ChatMessage: FC<Props> = memo(
                     >
                       
                     点此查看引用
-                  </a>
+                  </a>)}
               </>
             )}
           </div>

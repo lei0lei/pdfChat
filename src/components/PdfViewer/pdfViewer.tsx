@@ -92,7 +92,7 @@ const PdfViewerx = (
                                             />
                                         </Worker>
                                         )}
-
+                                        
                                         {// @ts-ignore
                                         !currentShowFileObj._file&&(<div className="flex flex-col items-center justify-center space-y-4 bg-white shadow-md rounded-md p-6">
                                         <DocumentIcon className="w-24 h-24 text-blue-500" />

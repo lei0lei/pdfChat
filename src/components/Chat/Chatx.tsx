@@ -185,36 +185,101 @@ export const Chat: FC<Props> = memo(
           let text = '';
           // 消息处理逻辑
           setLoading(true)
-          console.log('1')
-          console.log(message)
-          console.log(socket)
+          
           if (socket !== null) {
+
+            
           socket.emit('onConversation',{message:message['content'],
             seq_id:seq_id,
             conversationID:conversationID,
             sessionID:sessionID})
           }
-          console.log('sss')
+          // while (!done) {
+          if (socket !== null) {
+            socket.on('answer-token',(data)=>{
+              // console.log(data)
+              const chunkValue = data.token;
+              // console.log(chunkValue)
+              if (chunkValue!==null){
+							text += chunkValue;}
+							//第一个片段
+							if (isFirst) {
+                // console.log('first')
+                isFirst = false;
+                const updatedMessages: Message[] = [
+                  ...updatedConversation.messages,
+                  { role: 'assistant', 
+                  content: chunkValue,
+                  data_ref_filename:null,
+                  data_ref_page:null },
+                ];
+
+                updatedConversation = {
+                  ...updatedConversation,
+                  messages: updatedMessages,
+                };
+
+                setSelectedConversation(updatedConversation);
+
+							} else if(!isFirst&&!data.end) {
+              //后续片段
+              // console.log('middle')
+                const updatedMessages: Message[] = updatedConversation.messages.map(
+                  (message, index) => {
+                    if (index === updatedConversation.messages.length - 1) {
+                      return {
+                        ...message,
+                        content: text,
+                      };
+                    }
+    
+                    return message;
+                  },
+                );
+  
+                updatedConversation = {
+                  ...updatedConversation,
+                  messages: updatedMessages,
+                };
+    
+                setSelectedConversation(updatedConversation);
+							
+
+              } else if(data.end){
+              //结尾
+              // console.log('end')
+            
+            }
+            })}
+          // }
+          //添加索引
+					
+
           if (socket !== null) {
           socket.on('answer',(data) => {
-          console.log('2')
-          // console.log(data.result.text,data.refFilename,data.refPage,data.refText);
-          console.log(data.result)
-          console.log(data.ref)
-          const textResponse = data.result.text
+          console.log(data)
+          const updatedMessages: Message[] = updatedConversation.messages.map(
+            (message, index) => {
+              if (index === updatedConversation.messages.length - 1) {
+                return {
+                  ...message,
+                  content: data.result.text,
+                  data_ref_filename:data.ref[0].refFilename,
+            			data_ref_page:data.ref[0].refPage
+                };
+              }
 
-          console.log('3')
-          const updatedMessages: Message[] = [
-            ...updatedConversation.messages,
-            { role: 'assistant', content: textResponse ,data_ref_filename:data.ref[0].refFilename,
-            data_ref_page:data.ref[0].refPage},
-          ];
+              return message;
+            },
+          );
+
           updatedConversation = {
             ...updatedConversation,
             messages: updatedMessages,
           };
+
           setSelectedConversation(updatedConversation);
-  
+
           saveConversation(updatedConversation);
   
           const updatedConversations: Conversation[] = conversations.map(
@@ -230,9 +295,6 @@ export const Chat: FC<Props> = memo(
           if (updatedConversations.length === 0) {
             updatedConversations.push(updatedConversation);
           }
-  
-          setConversations(updatedConversations);
-          saveConversations(updatedConversations);
   
           setMessageIsStreaming(false);
           // actions.handleResponse('filename: '+data.ref[0].refFilename+'\r\n'+'pagenum: '+data.ref[0].refPage);
@@ -241,65 +303,7 @@ export const Chat: FC<Props> = memo(
           updateSeq_id(seq_id+1);
           setLoading(false);
           })}
-          // setLoading(false);
-          // // 消息渲染
-          // setSelectedConversation(updatedConversation);
-  
-          // saveConversation(updatedConversation);
-  
-          // const updatedConversations: Conversation[] = conversations.map(
-          //   (conversation) => {
-          //     if (conversation.id === conversation.id) {
-          //       return updatedConversation;
-          //     }
-  
-          //     return conversation;
-          //   },
-          // );
-  
-          // if (updatedConversations.length === 0) {
-          //   updatedConversations.push(updatedConversation);
-          // }
-  
-          // setConversations(updatedConversations);
-          // saveConversations(updatedConversations);
-  
-          // setMessageIsStreaming(false);
-        } else {
-          const  answer = 'xx';
-          const updatedMessages: Message[] = [
-            ...updatedConversation.messages,
-            { role: 'assistant', content: answer ,data_ref_filename:'',data_ref_page:''},
-          ];
-  
-          updatedConversation = {
-            ...updatedConversation,
-            messages: updatedMessages,
-          };
-  
-          setSelectedConversation(updatedConversation);
-          saveConversation(updatedConversation);
-  
-          const updatedConversations: Conversation[] = conversations.map(
-            (conversation) => {
-              if (conversation.id === conversation.id) {
-                return updatedConversation;
-              }
-  
-              return conversation;
-            },
-          );
-  
-          if (updatedConversations.length === 0) {
-            updatedConversations.push(updatedConversation);
-          }
-  
-          setConversations(updatedConversations);
-          saveConversations(updatedConversations);
-  
-          setLoading(false);
-          setMessageIsStreaming(false);
-        }
+        } 
       }
     };
     // 在用户手动滚动聊天窗口时调用。它检查用户是否已滚动到接近底部。如果是，则启用自动滚动并隐藏"向下滚动"按钮。否则，禁用自动滚动并显示"向下滚动"按钮。
