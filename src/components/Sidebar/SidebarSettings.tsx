@@ -50,7 +50,7 @@ export const SidebarSettings: FC<Props> = ({
         // @ts-ignore
         onClick={gotoMain}
       />
-    <SidebarButton
+    {/* <SidebarButton
         text={lightMode === 'light' ? t('Dark mode') : t('Light mode')}
         icon={
           lightMode === 'light' ? <IconMoon size={18} /> : <IconSun size={18} />
@@ -58,7 +58,7 @@ export const SidebarSettings: FC<Props> = ({
         onClick={() =>
           onToggleLightMode(lightMode === 'light' ? 'dark' : 'light')
         }
-      />
+      /> */}
     <SidebarButton
         text={t('登出')}
         icon={
