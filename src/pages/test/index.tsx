@@ -293,8 +293,8 @@ const handleEditMessage = (message: Message, messageIndex: number) => {
               </div>
               {/* <div className="info-bar">Info bar 2</div> */}
               <div className="info-bar flex items-center justify-center bg-gray-500">
-  <div className="text-center text-white">Info bar 2</div>
-</div> 
+              <div className="text-center text-white">Info bar 2</div>
+            </div> 
               </div>
               </div>
               </PdfProvider>

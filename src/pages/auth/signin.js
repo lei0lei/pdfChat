@@ -49,7 +49,8 @@ export default function Login() {
           <body class="h-full">
           ```
         */}
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="h-screen flex justify-center items-center bg-gray-900">
+    <div className="flex h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
@@ -120,6 +121,7 @@ export default function Login() {
             </Link>
   
           </div>
+        </div>
         </div>
       </>
     )
