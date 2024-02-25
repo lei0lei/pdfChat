@@ -75,7 +75,8 @@ export default function Signup() {
           <body class="h-full">
           ```
         */}
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="h-screen flex justify-center items-center bg-gray-900">
+    <div className="flex h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
@@ -202,7 +203,9 @@ export default function Signup() {
           <h2>this is 用户协议,lol</h2>
           {/* 协议内容 */}
           </div>
+          
         </Modal>
+        </div>
       </>
     )
   }
